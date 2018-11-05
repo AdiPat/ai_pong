@@ -1,0 +1,146 @@
+$bp-large: 64em; // 1024px
+$bp-medium: 54em; // 864px
+$bp-msmall: 48em;
+$bp-small: 35em;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background-color: black;
+    width: 100%;
+    height: 100%;
+//    margin: 0px;
+//    border: 0;
+//    overflow: hidden;
+//    /*  Disable scrollbars */
+//    display: block;
+    /* No floating content on sides */
+}
+
+#gameArea {
+  padding: 2rem;
+  position: absolute;
+  left:     50%;
+  top:      50%;
+  transform: translate(-50%, -50%);
+}
+
+h1 {
+    font-size: 4rem;
+    color: gold;
+    margin: 3rem 0 1rem 0;
+    text-align: center;
+    
+    @media only screen and (max-width: $bp-medium) {
+        display: none;
+    }
+}
+
+.btn-start {
+
+    &,
+    &:link,
+    &:visited {
+        position: absolute;
+        font-size: 2rem;
+        background-color: transparent;
+        padding: 1rem 3.5rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: gold;
+        border: 2px solid gold;
+        top: 50%;
+        left: 50%;
+        cursor: pointer;
+        transform: translate(-50%, -50%);
+        transition: all 0.5s;
+        outline: none;
+        z-index: 200;
+    }
+
+
+
+    &:hover,
+    &:active,
+        {
+        background-color: orange;
+        border: 2px solid orange;
+        color: black;
+        outline: none;
+        //transform: translateY(-1rem);
+    }
+
+}
+
+#canvas {
+    //position: absolute;
+//    top: 50%;
+//    left: 50%;
+//    transform: translate(-50%, -50%);
+  //  flex: 1;
+ //   width: 100%;
+//    height: 100%;
+    border: 1px solid gold;
+    z-index: 100;
+}
+
+footer {
+    font-size: 1.6rem;
+    color: gold;
+    font-weight: 400;
+    position: absolute;
+    right: 3rem;
+    bottom: 3rem;
+    line-height: 1.7;
+    
+    @media only screen and (max-width: $bp-medium) {
+        display: none;
+    }
+}
+
+.menu-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: lighten(black, 5%);
+    border-radius: 5px;
+    z-index: -10;
+    opacity: 0;
+    transition: opacity 0.5s;
+    box-shadow: 0 0 2rem 1rem gold;
+
+    .controls-list {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        list-style: none;
+        padding: 2rem;
+
+        li {
+            span {
+                display: flex;
+                justify-content: center;
+                font-size: 2rem;
+                font-weight: 600;
+                margin-bottom: 0.5rem;
+                color: gold;
+            }
+
+            text-align: center;
+            font-size: 1.5rem;
+            color: white;
+            margin: 1rem;
+        }
+
+    }
+}
