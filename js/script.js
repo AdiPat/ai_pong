@@ -33,8 +33,7 @@ gameData = {
     plateWidth: 5,
     ballRadius: 8,
     soundBounce: new Audio('../sounds/bounce.wav'),
-    soundFail: new Audio('../sounds/fail.wav'),
-    AIDifficultyFactor: 1.1
+    soundFail: new Audio('../sounds/fail.wav')
 }
 
 
@@ -206,6 +205,14 @@ class Ball {
     }
 }
 
+/*
+*
+* AI opponent
+*
+*/
+
+
+
 
 /*
 *
@@ -226,7 +233,6 @@ const checkCollisions = () => {
     const plate0 = gameComponents.plates[0];
     const plate1 = gameComponents.plates[1];
     const ball = gameComponents.ball;
-    const invBall = gameComponents.invBall;
 
     // checks left edge of ball w.r.t plate and if the ball is actually hitting the plate 
     // i.e. ball.y is within bounds of vertical co-ordinates of plate
@@ -238,9 +244,6 @@ const checkCollisions = () => {
         gameData.scoreCounter += 1;
         
 
-        // TODO: Invisible Ball AI
-        invBall.setBallPos(ball.x, ball.y);
-        invBall.setBallSpeed(ball.speedX * gameData.AIDifficultyFactor, ball.speedY * gameData.AIDifficultyFactor);
     }
     // check the same for plate 1
     if (ball.x > plate1.x - plate1.width && ball.y < plate1.y + plate1.height && ball.y > plate1.y) {
@@ -330,26 +333,15 @@ const updateGame = () => {
     // if scoreCounter crosses 5 , increase ball speed
     if (gameData.scoreCounter > 5) {
         gameComponents.ball.setBallSpeed(gameComponents.ball.speedX + 5, gameComponents.ball.speedY + 5);
-        gameComponents.invBall.setBallSpeed(gameComponents.ball.speedX * gameData.AIDifficultyFactor, gameComponents.ball.speedY * gameData.AIDifficultyFactor);
         gameData.scoreCounter = 0;
     }
     clearFrame();
     scoreManager.renderScore();
     checkCollisions();
-    // adjust computer controlled plate to predict the path of the ball
     gameComponents.plates[0].renderPlate();
-    // this cannot happen if the ball has just hit the other plate
-    // TODO: plate moves too abruptly
-    if(gameComponents.invBall.x > 10)
-        gameComponents.plates[1].y = gameComponents.invBall.y - gameComponents.plates[1].height / 2;
-
     gameComponents.plates[1].renderPlate();
-    gameComponents.invBall.moveBall();
     gameComponents.ball.moveBall();
     gameComponents.ball.renderBall();
-
-    // render inv ball
-    gameComponents.invBall.renderBall();
 };
 
 
@@ -361,7 +353,6 @@ function init() {
             new Plate(gameData.plateWidth, gameData.plateHeight, 0, canvas.height / 2),
             new Plate(gameData.plateWidth, gameData.plateHeight, canvas.width - gameData.plateWidth, canvas.height / 4)],
         ball: new Ball(canvas.width / 2, canvas.height / 2, gameData.ballRadius, gameData.ballColor, -5, 5),
-        invBall: new Ball(canvas.width / 2, canvas.height / 2, gameData.ballRadius, 'transparent', 0, 0, "invisible")
     };
 }
 
