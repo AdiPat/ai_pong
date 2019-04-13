@@ -18,12 +18,6 @@ body {
     background-color: black;
     width: 100%;
     height: 100%;
-//    margin: 0px;
-//    border: 0;
-//    overflow: hidden;
-//    /*  Disable scrollbars */
-//    display: block;
-    /* No floating content on sides */
 }
 
 #gameArea {
@@ -70,8 +64,7 @@ h1 {
 
 
     &:hover,
-    &:active,
-        {
+    &:active {
         background-color: orange;
         border: 2px solid orange;
         color: black;
@@ -117,14 +110,21 @@ footer {
     z-index: -10;
     opacity: 0;
     transition: opacity 0.5s;
-    box-shadow: 0 0 2rem 1rem gold;
+    border: 1px solid gold;
+    //box-shadow: 0 0 2rem 1rem gold;
 
     .controls-list {
         display: flex;
         flex-direction: column;
         justify-content: center;
         list-style: none;
-        padding: 2rem;
+        padding-bottom: 2rem;
+
+        &__title {
+            border-bottom: 1px solid gold;
+            margin: 0rem !important;
+            padding: 2rem 2rem 1rem 2rem;
+        }
 
         li {
             span {
@@ -133,6 +133,7 @@ footer {
                 font-size: 2rem;
                 font-weight: 600;
                 margin-bottom: 0.5rem;
+                padding: 1rem 1rem 0 1rem;
                 color: gold;
             }
 

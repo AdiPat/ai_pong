@@ -10,8 +10,7 @@ html {
 body {
   background-color: black;
   width: 100%;
-  height: 100%;
-  /* No floating content on sides */ }
+  height: 100%; }
 
 #gameArea {
   padding: 2rem;
@@ -78,13 +77,17 @@ footer {
   z-index: -10;
   opacity: 0;
   transition: opacity 0.5s;
-  box-shadow: 0 0 2rem 1rem gold; }
+  border: 1px solid gold; }
   .menu-box .controls-list {
     display: flex;
     flex-direction: column;
     justify-content: center;
     list-style: none;
-    padding: 2rem; }
+    padding-bottom: 2rem; }
+    .menu-box .controls-list__title {
+      border-bottom: 1px solid gold;
+      margin: 0rem !important;
+      padding: 2rem 2rem 1rem 2rem; }
     .menu-box .controls-list li {
       text-align: center;
       font-size: 1.5rem;
@@ -96,4 +99,5 @@ footer {
         font-size: 2rem;
         font-weight: 600;
         margin-bottom: 0.5rem;
+        padding: 1rem 1rem 0 1rem;
         color: gold; }
