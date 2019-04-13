@@ -1,0 +1,47 @@
+{
+    "keys": {
+        "UP": 38,
+        "RIGHT": 39,
+        "DOWN": 40,
+        "LEFT": 37,
+        "SPACE": 32
+    },
+    "colors": {
+        "bg-primary": "black",
+        "bg-secondary": "lightgrey",
+        "ball": "white",
+        "paddle": "white",
+        "score": "gold"
+    },
+    "dimensions": {
+        "board": {
+            "height": 480,
+            "width": 800
+        },
+        "paddle": {
+            "height": 60,
+            "width": 10
+        },
+        "ball": {
+            "radius": 8
+        }
+    },
+    "locs": {
+        "ball": {
+            "x": 400,
+            "y": 240
+        },
+        "p0": {
+            "x": 5,
+            "y": 30
+        },
+        "p1": {
+            "x": 460,
+            "y": 150
+        }
+    },
+    "audio": {
+        "bounce": "./sounds/bounce.wav",
+        "fail": "./sounds/fail.wav"
+    }
+}
