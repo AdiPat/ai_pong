@@ -163,19 +163,24 @@ class Ball {
             // invisible ball for path prediction
             if (this.type === 'invisible') {
                 // the job of this ball is just till it hits the bound, then it gets reset
-                if (this.x + this.speedX >= canvas.width - gameData.plateWidth) {
-                    this.speedX = 0;
-                    this.speedY = 0;
-                }
+                // if (this.x + this.speedX >= canvas.width - gameData.plateWidth) {
+                //     this.speedX = 0;
+                //     this.speedY = 0;
+                // }
             } else {
                 // if ball has gone past either plate, update scores
-                if (this.x + this.speedX >= canvas.width)
-                    scoreManager.updateScore(0);
-                else if (this.x + this.speedX <= gameComponents.plates[0].x + gameComponents.plates[1].width) {
-                    scoreManager.updateScore(1);
+                // TODO: move score updation out of this!
+                if(this.type != 'invisible') {
+                    if (this.x + this.speedX >= canvas.width)
+                        scoreManager.updateScore(0);
+                    else if (this.x + this.speedX <= gameComponents.plates[0].x + gameComponents.plates[1].width) {
+                        scoreManager.updateScore(1);
+                    }
+                    playSound('fail');
                 }
+                
 
-                playSound('fail');
+                
                 
                 // set new ball position to the centre and reset speed
                 this.x = canvas.width / 2;
@@ -208,10 +213,66 @@ class Ball {
 /*
 *
 * AI opponent
+* Abstracts all AI operations
 *
 */
 
+class AIBot {
 
+    constructor(plate, realBall) {
+        this.plate = plate;
+        this.realBall = realBall;
+        // set up invisible ball with configuration of real ball
+        // color is cyan for testing
+        this.invBall = new Ball(realBall.x, realBall.y, realBall.radius, 'cyan', realBall.speedX, realBall.speedY, 'invisible');
+        this.boost = true;
+
+        if(this.realBall.speedX < 0)
+            this.boost = false;
+    }
+
+    // renders changes to canvas
+    render() {
+        this.invBall.renderBall();
+        this.plate.renderPlate();
+    }
+
+    move() {
+        if(!this.boost)
+            this.invBall.setBallSpeed(this.realBall.speedX, this.realBall.speedY);
+        this.invBall.moveBall();
+        // set plate movement
+        let plate_dir = "up";
+        if(this.plate.y < this.invBall.y + this.plate.height/2) {
+            plate_dir = "down";
+        }
+        this.plate.movePlate(5, plate_dir);
+    }
+
+    // makes necessary changes after collision with plate
+    collision(boost=false) {
+        this.boost = boost;
+        if(boost) {
+            // let mag = this.realBall.speedX*this.realBall.speedX + this.realBall.speedY*this.realBall.speedY;
+            // mag = Math.sqrt(mag) + 3;
+
+            // // find angle 
+            // let ang = Math.atan(Math.abs(this.realBall.speedY) / Math.abs(this.realBall.speedX));
+
+            // this.invBall.speedX = mag * Math.sin(ang);
+            // this.invBall.speedY = mag * Math.cos(ang);
+            this.invBall.setBallSpeed(this.realBall.speedX*1.2, this.realBall.speedY*1.2)
+        }
+        else {
+            this.invBall.x = this.realBall.x; 
+            this.invBall.y = this.realBall.y;
+            this.invBall.speedX = this.realBall.speedX;
+            this.invBall.speedY = this.realBall.speedY;
+        }
+        this.invBall.moveBall();
+    }
+
+}
 
 
 /*
@@ -240,6 +301,9 @@ const checkCollisions = () => {
         ball.speedX = -ball.speedX;
         // TODO: add some error so that perpendicular collisions don't stay in the same line
         playSound('bounce');
+        gameComponents.ai.collision(true);
+        // this is where the ai ball bounces off at a greater speed!
+
         // whenever there is a bounce against player's plate, update score counter
         gameData.scoreCounter += 1;
         
@@ -249,6 +313,7 @@ const checkCollisions = () => {
     if (ball.x > plate1.x - plate1.width && ball.y < plate1.y + plate1.height && ball.y > plate1.y) {
         //console.log("Collided with plate1: ", plate1, ball);
         ball.speedX = -ball.speedX;
+        gameComponents.ai.collision();
         playSound('bounce');
     }
 }
@@ -331,29 +396,36 @@ const updateGame = () => {
     }// don't update if the game is paused / not started
         
     // if scoreCounter crosses 5 , increase ball speed
-    if (gameData.scoreCounter > 5) {
-        gameComponents.ball.setBallSpeed(gameComponents.ball.speedX + 5, gameComponents.ball.speedY + 5);
-        gameData.scoreCounter = 0;
-    }
+    // if (gameData.scoreCounter > 5) {
+    //     gameComponents.ball.setBallSpeed(gameComponents.ball.speedX + 5, gameComponents.ball.speedY + 5);
+    //     gameData.scoreCounter = 0;
+    // }
     clearFrame();
     scoreManager.renderScore();
     checkCollisions();
     gameComponents.plates[0].renderPlate();
-    gameComponents.plates[1].renderPlate();
+    //gameComponents.plates[1].renderPlate();
     gameComponents.ball.moveBall();
+    gameComponents.ai.move();
+    gameComponents.ai.render();
     gameComponents.ball.renderBall();
 };
 
 
 // sets up all game objects
 function init() {
-    // clean this
-    return {
+    let data = {
         plates: [
             new Plate(gameData.plateWidth, gameData.plateHeight, 0, canvas.height / 2),
             new Plate(gameData.plateWidth, gameData.plateHeight, canvas.width - gameData.plateWidth, canvas.height / 4)],
         ball: new Ball(canvas.width / 2, canvas.height / 2, gameData.ballRadius, gameData.ballColor, -5, 5),
     };
+
+    let ai_bot = new AIBot(data.plates[1], data.ball);
+    data.ai = ai_bot;
+
+    // clean this
+    return data;
 }
 
 // starts the game
