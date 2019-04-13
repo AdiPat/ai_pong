@@ -3,17 +3,16 @@
   "version": "1.0.0",
   "description": "Classic 2D Table Tennis arcade game",
   "private": true,
-  "main": "js/script.js",
   "scripts": {
-    "devserver": "live-server", 
+    "devserver": "webpack-dev-server --open",
     "start": "npm-run-all --parallel devserver watch:sass",
-    "compile:sass": "node-sass sass/main.scss css/style.css",
+    "compile:sass": "node-sass src/sass/main.scss dist/css/style.css",
     "prefix:css": "postcss --use autoprefixer -b 'last 10 versions' css/style.comp.css -o css/style.prefix.css",
     "compress:css": "node-sass css/style.prefix.css css/style.css --output-style compressed",
     "build:css": "npm-run-all compile:sass prefix:css compress:css",
-    "watch:sass": "nodemon -e scss -x \"npm run compile:sass\""
+    "watch:sass": "nodemon -e scss -x \"npm run compile:sass\"",
+    "build": "webpack"
   },
-
   "author": "Aditya Patange",
   "license": "ISC",
   "devDependencies": {
@@ -22,6 +21,9 @@
     "node-sass": "^4.5.3",
     "nodemon": "^1.18.4",
     "npm-run-all": "^4.1.1",
-    "postcss-cli": "^6.1.2"
+    "postcss-cli": "^6.1.2",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.3.1"
   }
 }
