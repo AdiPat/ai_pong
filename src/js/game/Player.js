@@ -1,3 +1,5 @@
+import AI_Bot from '../components/AI_Bot';
+
 export default class Player {
     /**
      * 
@@ -9,6 +11,7 @@ export default class Player {
         this.n = num_players;
         this.types = player_types;
         this.game = game;
+        this.npc = [null, null];
         this.key_bindings = key_bindings;
         this.paddle_controls = {
             "up": function(p, key) {
@@ -29,7 +32,10 @@ export default class Player {
         this.types.forEach((v, idx) => {
             if(v) // human
                 this.initControls(idx);
+            else
+                this.initNPC(idx);
         });
+
     }
 
     initControls(pid) {
@@ -45,7 +51,21 @@ export default class Player {
             }.bind(this);
 
             document.addEventListener(eType,listener);
-            
         });
+    }
+
+    initNPC(pid) {
+        let curNPC = new AI_Bot(this.game, this.game.objects.ball, this.game.objects[`paddle-${pid}`]);
+
+
+        this.npc[pid] = curNPC;
+    }
+
+    getNPCControls() {
+        let controls = {
+            "up": this.paddle_controls.up.bind(this),
+            "down": this.paddle_controls.down.bind(this)
+        };
+        return controls;
     }
 }

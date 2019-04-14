@@ -1,4 +1,5 @@
 import Paddle from "../components/Paddle";
+import Player from "./Player";
 import { playSound } from "./utils";
 
 export default class Game {
@@ -15,6 +16,7 @@ export default class Game {
         this.config = config;
         this.paused = false;
         this.score = [0,0];
+        this.player = new Player(this, 2, [true, false], [config.keys.p0, config.keys.p1]);
     }
 
     /**
@@ -74,9 +76,10 @@ export default class Game {
 
         
         // TODO: Dirty, but works for now
+        // It's not possible to add a shadow ball with this
+        // need a more general function
         if((ball.x + ball.radius >= xlimit) || (ball.x - ball.radius <= 0)) {
             if((ball.y > p0.y && ball.y < p0.y + p0.height) || (ball.y > p1.y && ball.y < p1.y + p1.height)) {
-                // bounce sound
                 playSound(this.config.audio.bounce);
                 ball.setSpeed(-ball.speedX, ball.speedY);
             }
@@ -118,6 +121,14 @@ export default class Game {
     loop() {
         if (!this.paused) {
             this.detectCollisions();
+            // if npc exists, perform npc movements
+            this.player.types.forEach((v,idx) => {
+                if(!v) {
+                    let controls = this.player.getNPCControls();
+                    this.player.npc[idx].control(controls);
+                }
+            });
+            //
             this.update();
             this.render();
         }
@@ -127,6 +138,7 @@ export default class Game {
      * Starts the game
      */
     start() {
+        console.log(this.player);
         this.interval = setInterval(this.loop.bind(this), 16.6667);
     }
 
