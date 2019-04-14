@@ -78,15 +78,15 @@ export default class Game {
         if(p0.y + p0.height >= ylimit) {
             p0.setLoc(0,ylimit - p0.height);
         } 
-        if(p0.y - p0.height <= 0) {
+        if(p0.y <= 0) {
             p0.setLoc(0,0);
         }
 
-        if(p1.y + p1.height >= 480) {
+        if(p1.y + p1.height >= ylimit) {
             p1.setLoc(xlimit - p1.width,ylimit- p1.height);
         } 
 
-        if(p1.y - p1.height <= 0) {
+        if(p1.y <= 0) {
             p1.setLoc(xlimit - p1.width,0);
         }
     }
