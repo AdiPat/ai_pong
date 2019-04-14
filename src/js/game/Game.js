@@ -52,37 +52,41 @@ export default class Game {
         const p0 = this.objects['paddle-0'];
         const p1 = this.objects['paddle-1'];
 
+
+        const xlimit = this.canvasCtx.canvas.width;
+        const ylimit = this.canvasCtx.canvas.height;
+
         
         // TODO: Dirty, but works for now
-        if((ball.x + ball.radius >= 800) || (ball.x - ball.radius <= 0)) {
+        if((ball.x + ball.radius >= xlimit) || (ball.x - ball.radius <= 0)) {
             if((ball.y > p0.y && ball.y < p0.y + p0.height) || (ball.y > p1.y && ball.y < p1.y + p1.height))
                 ball.setSpeed(-ball.speedX, ball.speedY);
             else {
                 // relaunch ball
-                ball.setLoc(240, 400);
+                ball.setLoc((xlimit/2), (ylimit/2));
                 ball.setSpeed(-3, 3);
             }
         }
     
         // ball and vertical bounds
-        if((ball.y + ball.radius >= 480) || (ball.y - ball.radius <= 0))
+        if((ball.y + ball.radius >= ylimit) || (ball.y - ball.radius <= 0))
             ball.setSpeed(ball.speedX, -ball.speedY);
 
 
         // paddles
-        if(p0.y + p0.height >= 480) {
-            p0.setLoc(0,480 - p0.height);
+        if(p0.y + p0.height >= ylimit) {
+            p0.setLoc(0,ylimit - p0.height);
         } 
         if(p0.y - p0.height <= 0) {
             p0.setLoc(0,0);
         }
 
         if(p1.y + p1.height >= 480) {
-            p1.setLoc(800 - p1.width,480 - p1.height);
+            p1.setLoc(xlimit - p1.width,ylimit- p1.height);
         } 
 
         if(p1.y - p1.height <= 0) {
-            p1.setLoc(800 - p1.width,0);
+            p1.setLoc(xlimit - p1.width,0);
         }
     }
 
