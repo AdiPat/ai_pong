@@ -55,6 +55,8 @@ function setupMouseEvents(game, ctx) {
             x: event.clientX - rect.left,
             y: event.clientY - rect.top
         };
-        // TODO: move plate
+        // TODO: remove this
+        game.objects['paddle-0'].setLoc(0, mousePos.y);
+        game.objects['paddle-0'].setSpeed(0,0);
     });
 }
