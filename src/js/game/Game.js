@@ -125,8 +125,10 @@ export default class Game {
     }
 
     restart() {
-        this.score = [0,0];
-        this.objects.ball.reset(); 
+        if(!this.paused) {  
+            this.score = [0,0];
+            this.objects.ball.reset(); 
+        }
     }
  
     pause() {
