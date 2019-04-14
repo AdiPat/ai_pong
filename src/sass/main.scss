@@ -32,11 +32,28 @@ h1 {
     font-size: 4rem;
     color: gold;
     margin: 3rem 0 1rem 0;
+    font-weight: 300;
+    position: absolute;
+    top: 1rem;
+    left: 50%;
+    transform: translate(-50%, -40%);
     text-align: center;
     
     @media only screen and (max-width: $bp-medium) {
         display: none;
     }
+}
+
+h2 {
+    font-weight: 300;
+    font-size: 2rem;
+    color: white;
+    position: absolute;
+    top: 6rem;
+    left: 50%;
+    transform: translate(-50%,-20%);
+    text-align: center;
+    margin: 1rem 0 1rem 0;
 }
 
 .btn-start {
@@ -110,7 +127,7 @@ footer {
     z-index: -10;
     opacity: 0;
     transition: opacity 0.5s;
-    border: 1px solid gold;
+    border: 1px solid white;
     //box-shadow: 0 0 2rem 1rem gold;
 
     .controls-list {
@@ -121,7 +138,7 @@ footer {
         padding-bottom: 2rem;
 
         &__title {
-            border-bottom: 1px solid gold;
+            border-bottom: 1px solid white;
             margin: 0rem !important;
             padding: 2rem 2rem 1rem 2rem;
         }
