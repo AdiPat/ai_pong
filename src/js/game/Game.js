@@ -7,10 +7,11 @@ export default class Game {
      * @param {CanvasRenderingContext2D} ctx - Canvas Context object for rendering
      * @param {Object} objects - Game components to be drawn
      */
-    constructor(name, ctx, objects) {
+    constructor(name, ctx, objects, config) {
         this.name = name;
         this.canvasCtx = ctx;
         this.objects = objects;
+        this.config = config;
         this.paused = false;
     }
 

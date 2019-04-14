@@ -2,6 +2,7 @@ import Ball from './components/Ball';
 import Paddle from './components/Paddle';
 import Game from './game/Game';
 import setupListeners from './game/listeners';
+import Player from './game/Player';
 
 
 var CONFIGS = require('./game/pong-conf.json')
@@ -41,7 +42,8 @@ function getComponents() {
 
 let ctx = getCanvasContext();
 let objs = getComponents();
-let game = new Game('ai-pong', ctx, objs);
+let game = new Game('ai-pong', ctx, objs, CONFIGS);
+let player = new Player(game, 2, [true, true], [CONFIGS.keys.p0, CONFIGS.keys.p1]);
 setupListeners(game, ctx);
 
 

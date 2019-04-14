@@ -1,10 +1,16 @@
 {
     "keys": {
-        "UP": 38,
-        "RIGHT": 39,
-        "DOWN": 40,
-        "LEFT": 37,
-        "SPACE": 32
+        "p0": {
+            "up": 87,
+            "down": 83
+        },
+        "p1": {
+            "up": 38,
+            "down": 40
+        },
+        "general": {
+            "space": 32
+        }   
     },
     "colors": {
         "bg-primary": "black",
@@ -33,12 +39,15 @@
         },
         "p0": {
             "x": 0,
-            "y": 4
+            "y": 0,
+            "max": 3
         },
         "p1": {
             "x": 0,
-            "y": 4
-        }
+            "y": 0,
+            "max": 5
+        },
+        "paddle-max": 4
     },
     "locs": {
         "ball": {
