@@ -21,12 +21,16 @@ function getCanvasContext() {
 // Generate objects for testing 
 function getComponents() {
     const pDim = CONFIGS.dimensions.paddle;
+    const boardDim = CONFIGS.dimensions.board;
     const ballDim = CONFIGS.dimensions.ball; 
     const colors = CONFIGS.colors;
     const ballLoc = CONFIGS.locs.ball; 
-    let b = new Ball(ballLoc.x, ballLoc.y, ballDim.radius, -5, 5, colors.ball, ctx);
-    let p0 = new Paddle(0, 100, pDim.width, pDim.height, 5, colors.paddle, ctx);
-    let p1 = new Paddle(800-7, 200, pDim.width, pDim.height, 5, colors.paddle, ctx);
+    const locs = CONFIGS.locs;
+    const ballSpeed = CONFIGS.speed.ball; 
+    const pSpeed = CONFIGS.speed.p0; 
+    let b = new Ball(ballLoc.x, ballLoc.y, ballDim.radius, ballSpeed.x, ballSpeed.y, colors.ball, ctx);
+    let p0 = new Paddle(locs.p0.x, locs.p0.y, pDim.width, pDim.height, pSpeed.y, colors.paddle, ctx);
+    let p1 = new Paddle(locs.p1.x, locs.p1.y, pDim.width, pDim.height, pSpeed.y, colors.paddle, ctx);
     return {
         'ball': b,
         'paddle-0': p0,
