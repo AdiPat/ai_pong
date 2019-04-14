@@ -19,7 +19,6 @@ export default class Player {
                     p.setSpeed(0, -Math.abs(this.game.config.speed['paddle-max']));
             }, 
             "down": function(p, key) {
-                console.log(p);
                 if(key === 'keyup')
                     p.setSpeed(0,0);
                 else
