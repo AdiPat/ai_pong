@@ -13,6 +13,7 @@ export default class Game {
         this.objects = objects;
         this.config = config;
         this.paused = false;
+        this.score = [0,0];
     }
 
     /**
@@ -38,11 +39,24 @@ export default class Game {
         ctx.fillStyle = "lightgrey";
         ctx.fillRect(canvas.width / 2, 0, 1, canvas.height);
 
+        // render scores
+        ctx.font = this.config.font;
+        ctx.fillStyle = this.config.colors.score;
+        ctx.fillText(`${this.score[0]}`, (1/4)*canvas.width, 40);
+        ctx.fillText(`${this.score[1]}`, (3/4)*canvas.width, 40);
+
         //
         Object.keys(this.objects).forEach((k) => {
             let curObj = this.objects[k];
             curObj.render();
         });
+    }
+
+    updateScore() {
+        const ball = this.objects['ball']
+        let pid = (ball.speedX > 0)?0:1; // ball is moving towards left
+        this.score[pid] += 1;
+        console.log(this.score);
     }
 
     /**
@@ -63,6 +77,8 @@ export default class Game {
             if((ball.y > p0.y && ball.y < p0.y + p0.height) || (ball.y > p1.y && ball.y < p1.y + p1.height))
                 ball.setSpeed(-ball.speedX, ball.speedY);
             else {
+                // update score
+                this.updateScore();
                 // relaunch ball
                 ball.setLoc((xlimit/2), (ylimit/2));
                 ball.setSpeed(-3, 3);
