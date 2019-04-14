@@ -81,6 +81,8 @@ export default class Game {
         if((ball.x + ball.radius >= xlimit) || (ball.x - ball.radius <= 0)) {
             if((ball.y > p0.y && ball.y < p0.y + p0.height) || (ball.y > p1.y && ball.y < p1.y + p1.height)) {
                 playSound(this.config.audio.bounce);
+                // reset npc
+                this.player.resetNPC();
                 ball.setSpeed(-ball.speedX, ball.speedY);
             }
             else {
@@ -88,7 +90,9 @@ export default class Game {
                 playSound(this.config.audio.fail);
                 // update score
                 this.updateScore();
-                // relaunch ball
+                // reset npc
+                this.player.resetNPC();
+                // reset ball
                 ball.reset();
             }
         }

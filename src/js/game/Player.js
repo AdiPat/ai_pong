@@ -68,4 +68,8 @@ export default class Player {
         };
         return controls;
     }
+
+    resetNPC() {
+        return;
+    }
 }
