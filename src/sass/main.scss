@@ -145,3 +145,17 @@ footer {
 
     }
 }
+
+#icon-restart {
+    width: 2.4rem;
+    height: auto;  
+    transition: background-color 0.5s;
+    position: absolute;
+    top: 3em;
+    right: 3rem;
+    cursor: pointer;
+    
+    &:hover {
+        background-color: grey; // remove this later, looks ugly
+    }
+}

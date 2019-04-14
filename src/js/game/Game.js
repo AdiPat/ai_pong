@@ -80,8 +80,7 @@ export default class Game {
                 // update score
                 this.updateScore();
                 // relaunch ball
-                ball.setLoc((xlimit/2), (ylimit/2));
-                ball.setSpeed(-3, 3);
+                ball.reset();
             }
         }
     
@@ -125,6 +124,11 @@ export default class Game {
         this.interval = setInterval(this.loop.bind(this), 16.6667);
     }
 
+    restart() {
+        this.score = [0,0];
+        this.objects.ball.reset(); 
+    }
+ 
     pause() {
         this.paused = true;
     }

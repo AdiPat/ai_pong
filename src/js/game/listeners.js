@@ -14,6 +14,8 @@ function setupUIEvents(game, ctx) {
         ctx.canvas.style.border = '1px solid lightgrey';
         game.start();
     });
+
+    document.querySelector('#icon-restart').addEventListener('click', e => game.restart());
 }
 
 /**

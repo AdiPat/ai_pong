@@ -26,4 +26,21 @@ export default class Ball extends Component {
 
         super.render(renderer); 
     }
+
+    // resets ball position
+    reset() {
+
+        this.setLoc(this.canvasCtx.canvas.width/2, this.canvasCtx.canvas.height/2);
+        this.setSpeed(0,0);
+
+        let resetFunc = function() {
+            const dirX = [-1,1][Math.floor((Math.random()*10))%2]; 
+            const dirY = [-1,1][Math.floor((Math.random()*10))%2]; 
+            this.setSpeed(dirX * (3+Math.floor(Math.random()*5)), dirY * (3+Math.floor(Math.random()*5)));
+            console.log(this.speedX, this.speedY);
+        }.bind(this);
+
+        // reset after 2 seconds
+        setTimeout(resetFunc, 1000);
+    }
 }
