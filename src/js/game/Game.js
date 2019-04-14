@@ -1,4 +1,5 @@
 import Paddle from "../components/Paddle";
+import { playSound } from "./utils";
 
 export default class Game {
 
@@ -74,9 +75,14 @@ export default class Game {
         
         // TODO: Dirty, but works for now
         if((ball.x + ball.radius >= xlimit) || (ball.x - ball.radius <= 0)) {
-            if((ball.y > p0.y && ball.y < p0.y + p0.height) || (ball.y > p1.y && ball.y < p1.y + p1.height))
+            if((ball.y > p0.y && ball.y < p0.y + p0.height) || (ball.y > p1.y && ball.y < p1.y + p1.height)) {
+                // bounce sound
+                playSound(this.config.audio.bounce);
                 ball.setSpeed(-ball.speedX, ball.speedY);
+            }
             else {
+                // play sound
+                playSound(this.config.audio.fail);
                 // update score
                 this.updateScore();
                 // relaunch ball
