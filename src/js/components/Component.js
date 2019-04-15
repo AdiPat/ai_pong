@@ -76,9 +76,25 @@ export default class Component {
             y: this.y + this.speedY
         }
 
+        const w = this.canvasCtx.canvas.width;
+        const h = this.canvasCtx.canvas.height;
+        const delta = 3; // 3px error
+
         if(this.checkBounds(newLoc.x, newLoc.y)) {
             this.x = newLoc.x;
             this.y = newLoc.y;
+            return true;
+        }
+        else {
+            // calculate new bounds
+            if(newLoc.x >= w)
+                this.x = w - delta;
+            if(newLoc.x <= 0)
+                this.x = delta;
+            if(newLoc.y >= h)
+                this.y = h - delta;
+            if(newLoc.y <= 0)
+                this.y = delta;
             return true;
         }
         //console.log("Component out of bounds: ", this);
