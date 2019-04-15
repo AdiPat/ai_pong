@@ -1,6 +1,5 @@
 export default function setupListeners(game, ctx) {    
     setupUIEvents(game, ctx);
-    setupMouseEvents(game, ctx);
     setupKeyEvents(game, ctx);
 }
 
