@@ -143,8 +143,14 @@ export default class Game {
             }
 
             // ball and vertical bounds
-            if((ball.y + ball.radius >= ylimit) || (ball.y - ball.radius <= 0))
+            if((ball.y + ball.radius >= ylimit)) {
+                ball.setLoc(ball.x, ylimit - 1.5 * ball.radius);
                 ball.setSpeed(ball.speedX, -ball.speedY);
+            }
+            else if((ball.y - ball.radius <= 0)) {
+                ball.setLoc(ball.x, 0+ 1.5*ball.radius);
+                ball.setSpeed(ball.speedX, -ball.speedY);
+            }
         }.bind(this);
 
         check_ball_collisions(ball, p0, p1, xlimit, ylimit);
