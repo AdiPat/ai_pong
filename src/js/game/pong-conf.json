@@ -1,6 +1,7 @@
 {
     "font": "35px Arial",
     "game_type": {
+        "1P": [true, false],
         "1P1": [true, false],
         "1P2": [false, true],
         "2P": [true, true], 

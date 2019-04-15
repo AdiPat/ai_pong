@@ -16,6 +16,7 @@ export default class Game {
         this.config = config;
         this.paused = false;
         this.score = [0,0];
+        this.type = 'AI';
         this.player = new Player(this, 2, config.game_type['AI'], [config.keys.p0, config.keys.p1]);
     }
 
@@ -27,6 +28,15 @@ export default class Game {
             let curObj = this.objects[k];
             curObj.move();
         });
+    }
+
+    /** 
+     * Changes game mode to 1P, 2P, AI 
+     *
+    */
+    changeMode(game_type) {
+        this.player = new Player(this, 2, this.config.game_type[game_type], [this.config.keys.p0, this.config.keys.p1]);
+        setTimeout(() => { this.player.resetNPC() }, 1000);
     }
 
     /**
@@ -157,11 +167,12 @@ export default class Game {
         this.interval = setInterval(this.loop.bind(this), 16.6667);
     }
 
-    restart() {
+    restart(game_type="AI") {
         if (!this.paused) {
             this.score = [0, 0];
             this.objects.ball.reset();
         }
+        this.changeMode(game_type);
     }
 
     pause() {

@@ -55,6 +55,11 @@ body {
             //font-weight: 600;
         }
     }
+
+    &__option-selected {
+        background-color: gold !important;
+        color: black !important;
+    }
 }
 
 .heading {

@@ -16,6 +16,24 @@ function setupUIEvents(game, ctx) {
     });
 
     document.querySelector('#icon-restart').addEventListener('click', e => game.restart());
+
+    // set game type 
+    const curGameClass = `#btn-${game.type}`
+    document.querySelector(curGameClass).classList.add('configs__option-selected');
+
+    const gTypes = ['1P','2P', 'AI'];
+    gTypes.forEach((typ) => {
+        document.querySelector(`#btn-${typ}`).addEventListener('click', (e) => {
+            // first toggle all other classes off
+            gTypes.forEach((v) => {
+                const className = `#btn-${v}`;
+                document.querySelector(className).classList.remove('configs__option-selected');
+            });
+
+            e.target.classList.add('configs__option-selected');
+            game.restart(typ);
+        });
+    });
 }
 
 /**

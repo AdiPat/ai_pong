@@ -39,6 +39,9 @@ body {
     .configs__option:hover {
       background-color: gold;
       color: black; }
+  .configs__option-selected {
+    background-color: gold !important;
+    color: black !important; }
 
 .heading {
   display: flex;
