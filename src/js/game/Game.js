@@ -122,20 +122,22 @@ export default class Game {
 
         let check_ball_collisions = function (ball, p0, p1, xlimit, ylimit, isShadow = false) {
             if (!isShadow) {
-                const boost = this.counter >= this.max_counter*2;
+                const boost = (this.counter) >= (this.max_counter*2);
 
                 // add a small error to smooth out animations
                 if((ball.x - ball.radius <= p0.width) && (ball.y >= (p0.y - 5) && ball.y <= (p0.y + p0.height + 5))) {
                     // left paddle
                     playSound(this.config.audio.bounce);
-                    this.counter += 1;
-                    ball.collision(p0, boost);
+                    //console.log(this.counter, this.max_counter*2, boost);
+                    ball.collision(p0, 6, boost);
+                    this.counter = (boost)?(1):(this.counter + 1);
                     this.player.resetNPC(0);
                 }
                 else if((ball.x + ball.radius >= xlimit-p1.width) && (ball.y > (p1.y - 5) && ball.y < p1.y + (p1.height+5))) {
                     playSound(this.config.audio.bounce);
-                    this.counter += 1;
-                    ball.collision(p1);
+                    //console.log(this.counter, this.max_counter*2, boost);
+                    ball.collision(p1, 6, boost);
+                    this.counter = (boost)?(1):(this.counter + 1);
                     this.player.resetNPC(0);
                 }
                 else if((ball.x + ball.radius >= xlimit) || (ball.x - ball.radius <= 0)) {
@@ -147,9 +149,6 @@ export default class Game {
                         ball.reset(1000);
                         this.player.resetNPC(1000);
                 }
-
-                if(boost)
-                    this.counter = 1;
             }
 
             // ball and vertical bounds

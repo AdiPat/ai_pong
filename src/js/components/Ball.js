@@ -34,7 +34,7 @@ export default class Ball extends Component {
      * randomly generates speed in the range [3,8] 
      * 
      */
-    reset(delay=1000, speed_range=[3,8]) {
+    reset(delay=1000, speed_range=[6,12]) {
 
         this.setLoc(this.canvasCtx.canvas.width/2, this.canvasCtx.canvas.height/2);
         this.setSpeed(0,0);
@@ -50,12 +50,15 @@ export default class Ball extends Component {
         setTimeout(() => resetFunc(spMin, spMax-spMin), delay);
     }
 
-    collision(paddle, minSpeed = 3, boost=false) {
-        const cf = paddle.cfactor;
+    collision(paddle, minSpeed = 6, boost=false) {
+        let cf = paddle.cfactor;
 
         // boost bounce
         if(boost)
             cf = 1 + cf;
+
+        // if(boost)
+        //     console.log(`BOOOST >>>>> ${cf}`)
 
         let new_vx = -this.speedX * cf;
 
