@@ -157,6 +157,7 @@ export default class Game {
             this.update();
             this.render();
         }
+        requestAnimationFrame(this.loop.bind(this));
     }
 
     /**
@@ -164,7 +165,7 @@ export default class Game {
      */
     start() {
         console.log(this.player);
-        this.interval = setInterval(this.loop.bind(this), 16.6667);
+        requestAnimationFrame(this.loop.bind(this));
     }
 
     restart(game_type="AI") {
