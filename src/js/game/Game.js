@@ -94,8 +94,10 @@ export default class Game {
                         this.updateScore();
                         // reset npc
                         // reset ball
-                        ball.reset();
-                        this.player.resetNPC();
+                        ball.reset(); // this is fired after 1s
+                        // if we reset NPC immediately, speed gets set to 0
+                        setTimeout(() => { this.player.resetNPC() }, 1000);
+                        //this.player.resetNPC();
                     }
                 }
             }
