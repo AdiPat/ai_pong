@@ -16,7 +16,7 @@ export default class Game {
         this.config = config;
         this.paused = false;
         this.score = [0,0];
-        this.type = 'AI';
+        this.type = config.game_type_keys["AI mode"];
         this.player = new Player(this, 2, config.game_type['AI'], [config.keys.p0, config.keys.p1]);
     }
 

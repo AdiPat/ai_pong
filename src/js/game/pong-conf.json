@@ -1,5 +1,11 @@
 {
     "font": "35px Arial",
+
+    "game_type_keys": {
+        "1 player": "1P",
+        "2 player": "2P",
+        "AI mode": "AI"
+    },
     "game_type": {
         "1P": [true, false],
         "1P1": [true, false],
