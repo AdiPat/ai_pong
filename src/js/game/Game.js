@@ -61,6 +61,7 @@ export default class Game {
      * Changes game mode to 1P, 2P, AI 
     */
     changeMode(game_type) {
+        this.type = game_type;
         this.player = new Player(this, 2, this.config.game_type[game_type], [this.config.keys.p0, this.config.keys.p1]);
         setTimeout(() => { this.player.resetNPC() }, 1000);
     }
