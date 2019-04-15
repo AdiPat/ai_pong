@@ -64,19 +64,3 @@ function setupKeyEvents(game, ctx, callbacks = undefined) {
         }
     });
 }
-
-/**
- * Make mouse move paddle for testing
- */
-function setupMouseEvents(game, ctx) {
-    canvas.addEventListener('mousemove', (event) => {
-        const rect = canvas.getBoundingClientRect();
-        const mousePos = {
-            x: event.clientX - rect.left,
-            y: event.clientY - rect.top
-        };
-        // TODO: remove this
-        game.objects['paddle-0'].setLoc(0, mousePos.y);
-        game.objects['paddle-0'].setSpeed(0,0);
-    });
-}
