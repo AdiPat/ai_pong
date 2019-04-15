@@ -145,14 +145,14 @@ export default class Game {
                     //console.log(this.counter, this.max_counter*2, boost);
                     ball.collision(p0, 6, boost);
                     this.counter = (boost)?(1):(this.counter + 1);
-                    this.player.resetNPC(0);
+                    this.player.resetNPCByID(0);
                 }
                 else if((ball.x + ball.radius >= xlimit-p1.width) && (ball.y > (p1.y - 5) && ball.y < p1.y + (p1.height+5))) {
                     playSound(this.config.audio.bounce);
                     //console.log(this.counter, this.max_counter*2, boost);
                     ball.collision(p1, 6, boost);
                     this.counter = (boost)?(1):(this.counter + 1);
-                    this.player.resetNPC(0);
+                    this.player.resetNPCByID(1);
                 }
                 else if((ball.x + ball.radius >= xlimit) || (ball.x - ball.radius <= 0)) {
                         // play sound

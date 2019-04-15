@@ -79,6 +79,21 @@ export default class Player {
         setTimeout(() => resetFunc(), delay);
     }
 
+    /**
+     * 
+     * @param {integer} NPC id
+     * @param {number} delay Delay in milliseconds
+     * Reset only the specified NPC.
+     * This makes sure the shadow ball is calibrated with this NPC's speed.
+     * 
+     */
+    resetNPCByID(id, delay=1000) {
+        let resetFunc = function(idx) {
+            this.npc[idx].reset();
+        }.bind(this);
+        setTimeout(() => resetFunc(id), delay);
+    }
+ 
     isNPCPresent() {
         return this.npc[0] || this.npc[1];
     }

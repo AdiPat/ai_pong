@@ -33,7 +33,23 @@ export default class AI_Bot {
      */
     predictPath() {
         const sb = this.game.objects['ball_shadow'];
-        return {x: sb.x, y: sb.y};
+        const max_w = this.game.config.dimensions.board.width;
+        const board_centre = max_w / 2;
+
+        /**
+         * Use shadow ball location only if the ball is moving towards the paddle.
+         * Otherwise, just let the paddle stay where it is.
+         */
+        if(this.paddle.x > board_centre) {
+            if(this.ball.speedX > 0)
+                return {x: sb.x, y: sb.y};
+        }
+        else if (this.paddle.x < board_centre) {
+            if(this.ball.speedX < 0)
+                return {x: sb.x, y: sb.y};
+        }
+
+        return {x: this.paddle.x, y: this.paddle.y };
     }
 
 
