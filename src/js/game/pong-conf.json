@@ -1,6 +1,6 @@
 {
     "font": "35px Arial",
-
+    "score_counter": 7,
     "game_type_keys": {
         "1 player": "1P",
         "2 player": "2P",

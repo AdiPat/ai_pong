@@ -50,8 +50,12 @@ export default class Ball extends Component {
         setTimeout(() => resetFunc(spMin, spMax-spMin), delay);
     }
 
-    collision(paddle, minSpeed = 3) {
+    collision(paddle, minSpeed = 3, boost=false) {
         const cf = paddle.cfactor;
+
+        // boost bounce
+        if(boost)
+            cf = 1 + cf;
 
         let new_vx = -this.speedX * cf;
 
