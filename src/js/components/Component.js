@@ -1,9 +1,18 @@
 /* 
-    Represents a game component
+*    Represents a game component
 */
 
 export default class Component {
 
+    /**
+     * 
+     * @param {number} x co-ordinate
+     * @param {number} y co-ordinate
+     * @param {number} speedX - x component of velocity
+     * @param {number} speedY - y component of velocity
+     * @param {string} color - hex code or named color value
+     * @param {CanvasRenderingContext2D} ctx 
+     */
     constructor(x, y, speedX, speedY, color, ctx) {
         this.x = x;
         this.y = y; 
@@ -13,9 +22,14 @@ export default class Component {
         this.canvasCtx = ctx;
     }
 
-    // Checks whether the new co-ordinates are within bounds of the board
+    /**
+     * 
+     * @param {number} newX New x co-ordinate
+     * @param {number} newY New y co-ordinate
+     * Checks if the new position is within bounds
+     * We assume the game area occupies all of the canvas.
+     */
     checkBounds(newX, newY) {
-        // TODO: checks if object is within canvas for new co-ordinates
         let max_h = this.canvasCtx.canvas.height; 
         let max_w = this.canvasCtx.canvas.width;
         let status = false; 
@@ -25,13 +39,24 @@ export default class Component {
         return status;
     }
 
-    // sets the speed of the component
+    /**
+     * 
+     * @param {number} vx Horizontal velocity component
+     * @param {number} vy Vertical velocity component
+     * Sets speeds (with direction) for the component
+     * 
+     */
     setSpeed(vx, vy) {
         this.speedX = vx; 
         this.speedY = vy; 
     }   
 
-    // sets location in 2D space directly
+    /**
+     * 
+     * @param {number} x x co-ordinate
+     * @param {number} y y co-ordinate
+     * Sets location of the component in 2D space
+     */
     setLoc(x, y) {
         if(!this.checkBounds(x,y)) {
             //debug console.log("Component out of bounds: ", this);
@@ -42,7 +67,9 @@ export default class Component {
         return true;
     }
 
-    // Update movement
+    /**
+     * Moves the component according to it's current speed in the current frame
+     */
     move() {
         let newLoc = {
             x: this.x + this.speedX,
@@ -54,7 +81,6 @@ export default class Component {
             this.y = newLoc.y;
             return true;
         }
-        // out of bounds
         //console.log("Component out of bounds: ", this);
         return false;
     }
@@ -68,6 +94,4 @@ export default class Component {
         renderer(this.canvasCtx, this.x, this.y);
         this.canvasCtx.fill();
     }
-
-
 }
