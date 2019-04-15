@@ -1,6 +1,6 @@
 {
-    "font": "35px Arial",
-    "score_counter": 7,
+    "font": "35px Montserrat",
+    "score_counter": 5,
     "game_type_keys": {
         "1 player": "1P",
         "2 player": "2P",
@@ -43,7 +43,7 @@
             "width": 10
         },
         "ball": {
-            "radius": 8
+            "radius": 7
         }
     },
     "speed": {
@@ -54,7 +54,7 @@
         "p0": {
             "x": 0,
             "y": 0,
-            "max": 3
+            "max": 5
         },
         "p1": {
             "x": 0,

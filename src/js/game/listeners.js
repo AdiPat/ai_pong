@@ -6,7 +6,7 @@ export default function setupUI(game, ctx) {
     document.querySelector('.btn-start').addEventListener('click', (e) => {
         e.target.style.zIndex = '-100';
         e.target.style.opacity = '0';
-        ctx.canvas.style.border = '1px solid lightgrey';
+        //ctx.canvas.style.border = '1px solid lightgrey';
         game.start();
     });
 

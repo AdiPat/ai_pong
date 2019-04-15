@@ -47,10 +47,15 @@ export default class Game {
         };
     }
 
+    debug() {
+        // to see shadow ball in action
+        this.objects['ball_shadow'].color = 'cyan';
+    }
     /**
      * Updates all objects
      */
     update() {
+        //this.debug();
         Object.keys(this.objects).forEach((k) => {
             let curObj = this.objects[k];
             curObj.move();
@@ -73,10 +78,18 @@ export default class Game {
         const ctx = this.canvasCtx;
         const canvas = this.canvasCtx.canvas;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "black";
+        ctx.fillStyle = "#1b1b1c";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "lightgrey";
-        ctx.fillRect(canvas.width / 2, 0, 1, canvas.height);
+
+        // draw dottted line
+        ctx.beginPath();
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 3;
+        ctx.setLineDash([5,10]);
+        ctx.moveTo(canvas.width / 2, 0);
+        ctx.lineTo(canvas.width / 2, canvas.height);
+        ctx.stroke();
+        //ctx.fillRect(canvas.width / 2, 0, 1, canvas.height);
     }
 
     /**
@@ -89,7 +102,8 @@ export default class Game {
         const canvas = this.canvasCtx.canvas;
         // render scores
         ctx.font = this.config.font;
-        ctx.fillStyle = this.config.colors.score;
+        //ctx.fillStyle = this.config.colors.score;
+        ctx.fillStyle = "white";
         ctx.fillText(`${this.score[0]}`, (1 / 4) * canvas.width, 40);
         ctx.fillText(`${this.score[1]}`, (3 / 4) * canvas.width, 40);
 
