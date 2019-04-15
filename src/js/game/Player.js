@@ -1,4 +1,5 @@
 import AI_Bot from '../components/AI_Bot';
+import { randomFloat } from './utils';
 
 export default class Player {
     /**
@@ -55,7 +56,8 @@ export default class Player {
     }
 
     initNPC(pid) {
-        let curNPC = new AI_Bot(this.game, this.game.objects.ball, this.game.objects[`paddle-${pid}`]);
+        const diffFactor = randomFloat(1.05, 1.4);
+        let curNPC = new AI_Bot(this.game, this.game.objects.ball, this.game.objects[`paddle-${pid}`], diffFactor);
         this.npc[pid] = curNPC;
     }
 
