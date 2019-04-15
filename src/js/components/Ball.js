@@ -57,11 +57,18 @@ export default class Ball extends Component {
 
         // don't let speed drop too low
         if(Math.abs(new_vx) <= 3) {
-            const vmod = Math.abs(new_vx) + MinSpeed;
+            const vmod = Math.abs(new_vx) + minSpeed;
             new_vx = (new_vx > 0)?(vmod):(-vmod);
         }
         //const old_ang = this.getVelocityAngle(-this.speedX, this.speedY);
         this.speedX = new_vx; 
+        if(this.speedX > 0) {
+            this.x = 1.5 * paddle.width;
+        }
+            
+        else {
+            this.x = this.canvasCtx.canvas.width - 1.5 * paddle.width;
+        }            
         //const new_ang = this.getVelocityAngle(new_vx, this.speedY);
     }
 

@@ -119,21 +119,19 @@ export default class Game {
 
         let check_ball_collisions = function (ball, p0, p1, xlimit, ylimit, isShadow = false) {
             if (!isShadow) {
-                if ((ball.x + ball.radius >= xlimit) || (ball.x - ball.radius <= 0)) {
-                    if ((ball.y > p0.y && ball.y < p0.y + p0.height) || (ball.y > p1.y && ball.y < p1.y + p1.height)) {
-                        playSound(this.config.audio.bounce);
-
-                        // this is where the ball speed changes, add collision factor here
-                        //ball.setSpeed(-ball.speedX, ball.speedY);
-
-                        if(ball.speedX < 0)
-                            ball.collision(p0);
-                        else
-                            ball.collision(p1);
-                        
-                        this.player.resetNPC();
-                    }
-                    else {
+                // add a small error to smooth out animations
+                if((ball.x - ball.radius <= p0.width) && (ball.y >= (p0.y - 5) && ball.y <= (p0.y + p0.height + 5))) {
+                    // left paddle
+                    playSound(this.config.audio.bounce);
+                    ball.collision(p0);
+                    this.player.resetNPC(0);
+                }
+                else if((ball.x + ball.radius >= xlimit-p1.width) && (ball.y > (p1.y - 5) && ball.y < p1.y + (p1.height+5))) {
+                    playSound(this.config.audio.bounce);
+                    ball.collision(p1);
+                    this.player.resetNPC(0);
+                }
+                else if((ball.x + ball.radius >= xlimit) || (ball.x - ball.radius <= 0)) {
                         // play sound
                         playSound(this.config.audio.fail);
                         // update score
@@ -141,12 +139,11 @@ export default class Game {
                         // reset ball and npc
                         ball.reset(1000);
                         this.player.resetNPC(1000);
-                    }
                 }
             }
 
             // ball and vertical bounds
-            if ((ball.y + ball.radius >= ylimit) || (ball.y - ball.radius <= 0))
+            if((ball.y + ball.radius >= ylimit) || (ball.y - ball.radius <= 0))
                 ball.setSpeed(ball.speedX, -ball.speedY);
         }.bind(this);
 
