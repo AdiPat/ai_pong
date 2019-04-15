@@ -39,7 +39,7 @@
             "width": 800
         },
         "paddle": {
-            "height": 60,
+            "height": 70,
             "width": 10
         },
         "ball": {
