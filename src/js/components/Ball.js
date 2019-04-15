@@ -44,7 +44,6 @@ export default class Ball extends Component {
             const dirX = [-1,1][Math.floor((Math.random()*10))%2]; 
             const dirY = [-1,1][Math.floor((Math.random()*10))%2]; 
             this.setSpeed(dirX * (spMin+Math.floor(Math.random()*spMax)), dirY * (spMin+Math.floor(Math.random()*spMax)));
-            console.log(this.speedX, this.speedY);
         }.bind(this);
 
         // reset after 1 second
