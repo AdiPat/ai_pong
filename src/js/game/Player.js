@@ -16,15 +16,15 @@ export default class Player {
         this.paddle_controls = {
             "up": function(p, key) {
                 // set upward speed for paddle while button is pressed
-                if(key === 'keyup')
+                if(key === 'keyup' || key == 'stop')
                     p.setSpeed(0,0);
-                else
+                else if(key == 'keydown' || key == 'move')
                     p.setSpeed(0, -Math.abs(this.game.config.speed['paddle-max']));
             }, 
             "down": function(p, key) {
-                if(key === 'keyup')
+                if(key === 'keyup' || key == 'stop')
                     p.setSpeed(0,0);
-                else
+                else if(key == 'keydown' || key == 'move')
                     p.setSpeed(0, Math.abs(this.game.config.speed['paddle-max']));
             }
         }
@@ -67,12 +67,14 @@ export default class Player {
         return controls;
     }
 
-    resetNPC() {
-        this.types.forEach((v,idx) => {
-            if(!v)
-                this.npc[idx].reset();
-        });
-        return;
+    resetNPC(delay=1000) {
+        let resetFunc = function() {
+            this.types.forEach((v,idx) => {
+                if(!v)
+                    this.npc[idx].reset();
+            });
+        }.bind(this);
+        setTimeout(() => resetFunc(), delay);
     }
 
     isNPCPresent() {

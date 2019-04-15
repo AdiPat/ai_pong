@@ -1,3 +1,4 @@
+import Ball from '../components/Ball';
 import Paddle from "../components/Paddle";
 import Player from "./Player";
 import { playSound } from "./utils";
@@ -8,20 +9,44 @@ export default class Game {
      * @param {string} name - The name of the game 
      * @param {CanvasRenderingContext2D} ctx - Canvas Context object for rendering
      * @param {Object} objects - Game components to be drawn
+     * @param {Object} config - Game configurations
      */
-    constructor(name, ctx, objects, config) {
+    constructor(name, ctx, config) {
         this.name = name;
         this.canvasCtx = ctx;
-        this.objects = objects;
         this.config = config;
+        this.objects = this.generateObjectsFromConfig();
         this.paused = false;
-        this.score = [0,0];
+        this.score = [0, 0];
         this.type = config.game_type_keys["AI mode"];
-        this.player = new Player(this, 2, config.game_type['AI'], [config.keys.p0, config.keys.p1]);
+        this.player = new Player(this, 2, config.game_type[this.type], [config.keys.p0, config.keys.p1]);
     }
 
     /**
-     * Update all objects
+    * Generates game objects, TODO: this should go into Game
+    */
+    generateObjectsFromConfig() {
+        const CONFIGS = this.config;
+        const pDim = CONFIGS.dimensions.paddle;
+        const boardDim = CONFIGS.dimensions.board;
+        const ballDim = CONFIGS.dimensions.ball;
+        const colors = CONFIGS.colors;
+        const ballLoc = CONFIGS.locs.ball;
+        const locs = CONFIGS.locs;
+        const ballSpeed = CONFIGS.speed.ball;
+        const pSpeed = CONFIGS.speed.p0;
+        let b = new Ball(ballLoc.x, ballLoc.y, ballDim.radius, ballSpeed.x, ballSpeed.y, colors.ball, this.canvasCtx);
+        let p0 = new Paddle(locs.p0.x, locs.p0.y, pDim.width, pDim.height, pSpeed.y, colors.paddle, this.canvasCtx);
+        let p1 = new Paddle(locs.p1.x, locs.p1.y, pDim.width, pDim.height, pSpeed.y, colors.paddle, this.canvasCtx);
+        return {
+            'ball': b,
+            'paddle-0': p0,
+            'paddle-1': p1
+        };
+    }
+
+    /**
+     * Updates all objects
      */
     update() {
         Object.keys(this.objects).forEach((k) => {
@@ -32,7 +57,6 @@ export default class Game {
 
     /** 
      * Changes game mode to 1P, 2P, AI 
-     *
     */
     changeMode(game_type) {
         this.player = new Player(this, 2, this.config.game_type[game_type], [this.config.keys.p0, this.config.keys.p1]);
@@ -40,10 +64,9 @@ export default class Game {
     }
 
     /**
-     * Renders all game objects
+     * Clears board for re-drawing
      */
-    render() {
-        //
+    clearBoard() {
         const ctx = this.canvasCtx;
         const canvas = this.canvasCtx.canvas;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -51,20 +74,31 @@ export default class Game {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = "lightgrey";
         ctx.fillRect(canvas.width / 2, 0, 1, canvas.height);
+    }
 
+    /**
+     * Renders all game objects
+     */
+    render() {
+        this.clearBoard();
+
+        const ctx = this.canvasCtx;
+        const canvas = this.canvasCtx.canvas;
         // render scores
         ctx.font = this.config.font;
         ctx.fillStyle = this.config.colors.score;
         ctx.fillText(`${this.score[0]}`, (1 / 4) * canvas.width, 40);
         ctx.fillText(`${this.score[1]}`, (3 / 4) * canvas.width, 40);
 
-        //
         Object.keys(this.objects).forEach((k) => {
             let curObj = this.objects[k];
             curObj.render();
         });
     }
 
+    /**
+     * Updates score depending on direction of the ball
+     */
     updateScore() {
         const ball = this.objects['ball']
         let pid = (ball.speedX > 0) ? 0 : 1; // ball is moving towards left
@@ -73,27 +107,23 @@ export default class Game {
     }
 
     /**
-     * TODO: Checks for collisions and makes corrections
+     * Checks for collisions and peforms the necessary adjustments
      */
     detectCollisions() {
         const ball = this.objects['ball'];
         const p0 = this.objects['paddle-0'];
         const p1 = this.objects['paddle-1'];
 
-
         const xlimit = this.canvasCtx.canvas.width;
         const ylimit = this.canvasCtx.canvas.height;
-
-
-        
-        // Abstract this out and add a special case for shadow ball
 
         let check_ball_collisions = function (ball, p0, p1, xlimit, ylimit, isShadow = false) {
             if (!isShadow) {
                 if ((ball.x + ball.radius >= xlimit) || (ball.x - ball.radius <= 0)) {
                     if ((ball.y > p0.y && ball.y < p0.y + p0.height) || (ball.y > p1.y && ball.y < p1.y + p1.height)) {
                         playSound(this.config.audio.bounce);
-                        // reset npc
+
+                        // this is where the ball speed changes, add collision factor here
                         ball.setSpeed(-ball.speedX, ball.speedY);
                         this.player.resetNPC();
                     }
@@ -102,12 +132,9 @@ export default class Game {
                         playSound(this.config.audio.fail);
                         // update score
                         this.updateScore();
-                        // reset npc
-                        // reset ball
-                        ball.reset(); // this is fired after 1s
-                        // if we reset NPC immediately, speed gets set to 0
-                        setTimeout(() => { this.player.resetNPC() }, 1000);
-                        //this.player.resetNPC();
+                        // reset ball and npc
+                        ball.reset(1000);
+                        this.player.resetNPC(1000);
                     }
                 }
             }
@@ -119,10 +146,15 @@ export default class Game {
 
         check_ball_collisions(ball, p0, p1, xlimit, ylimit);
 
-        if(this.player.isNPCPresent())
+        if (this.player.isNPCPresent())
             check_ball_collisions(this.objects['ball_shadow'], p0, p1, xlimit, ylimit, true);
 
-        // paddles
+
+        /* 
+         * Ideally this should be in the Paddle class
+         * as it checks if the paddle is within bounds considering paddle height.
+         * The base class only checks if the point is within bounds.
+         */
         if (p0.y + p0.height >= ylimit) {
             p0.setLoc(0, ylimit - p0.height);
         }
@@ -137,7 +169,6 @@ export default class Game {
         if (p1.y <= 0) {
             p1.setLoc(xlimit - p1.width, 0);
         }
-
     }
 
     /**
@@ -153,7 +184,6 @@ export default class Game {
                     this.player.npc[idx].control(controls);
                 }
             });
-            //
             this.update();
             this.render();
         }
@@ -161,26 +191,58 @@ export default class Game {
     }
 
     /**
+     * Initializes keys
+     */
+    init() {
+        const KEY_SPACE = this.config.keys.general.space; // temp 
+        document.addEventListener('keydown', (event) => {
+            if (event.keyCode == KEY_SPACE) {
+                // check if the game has been started first
+                console.log("SPACE")
+                if(!this.paused) 
+                    this.pause();
+                else 
+                    this.resume();
+
+            }
+        });
+    }
+
+    /**
      * Starts the game
      */
     start() {
-        console.log(this.player);
+        this.init();
         requestAnimationFrame(this.loop.bind(this));
     }
 
-    restart(game_type="AI") {
-        if (!this.paused) {
-            this.score = [0, 0];
-            this.objects.ball.reset();
-        }
+    /**
+     * @param {string} game_type Type of game: {P1,P2,AI}
+     * Restarts game with a new game type
+     */
+    restart(game_type = "AI") {
+        this.score = [0, 0];
+        this.objects.ball.reset();
+        this.objects['paddle-0'].reset();
+        this.objects['paddle-1'].reset();
         this.changeMode(game_type);
     }
 
     pause() {
+        const menuElem = document.querySelector('.menu-box');
+        if (!this.paused) {
+            menuElem.style.zIndex = '500';
+            menuElem.style.opacity = '1';
+        }
         this.paused = true;
     }
 
     resume() {
+        const menuElem = document.querySelector('.menu-box');
+        if (this.paused) {
+            menuElem.style.zIndex = '-10';
+            menuElem.style.opacity = '0';
+        }
         this.paused = false;
     }
 

@@ -25,4 +25,12 @@ export default class Paddle extends Component {
         // bind current object to renderer
         super.render(renderer);
     }
+
+    /**
+     * Resets paddle speed and position
+     */
+    reset() {
+        this.setSpeed(0,0);
+        this.y = (this.canvasCtx.canvas.height - this.height)/2;
+    }
 }

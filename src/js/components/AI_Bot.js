@@ -63,10 +63,10 @@ export default class AI_Bot {
             dir = "up";
 
         if(nextPt.y >= this.paddle.y && nextPt.y <= this.paddle.y + this.paddle.height) {
-            paddleControls[dir](this.paddle, "keyup"); // stop moving if the point is exactly in the middle
+            paddleControls[dir](this.paddle, "stop"); // stop moving if the point is exactly in the middle
         }
         else
-            paddleControls[dir](this.paddle, "npc"); // move up/down
+            paddleControls[dir](this.paddle, "move"); // move up/down
     }
 
 }
