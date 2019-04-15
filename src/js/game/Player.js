@@ -93,6 +93,15 @@ export default class Player {
         }.bind(this);
         setTimeout(() => resetFunc(id), delay);
     }
+
+    /**
+     * 
+     * Sets NPC difficulty factor
+     */
+    setDifficultyFactorByID(id, val) {
+        if(this.npc[id])
+            this.npc[id].setDifficulty(val);
+    }
  
     isNPCPresent() {
         return this.npc[0] || this.npc[1];

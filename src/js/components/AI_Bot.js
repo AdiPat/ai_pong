@@ -52,6 +52,11 @@ export default class AI_Bot {
         return {x: this.paddle.x, y: this.paddle.y };
     }
 
+    setDifficulty(dfactor) {
+        this.difficulty = dfactor;
+        this.reset();
+    }
+
 
     /**
      * 
@@ -78,7 +83,7 @@ export default class AI_Bot {
         if(nextPt.y < this.paddle.y + this.paddle.height/2)
             dir = "up";
 
-        if(nextPt.y >= this.paddle.y && nextPt.y <= this.paddle.y + this.paddle.height) {
+        if(nextPt.y >= this.paddle.y + this.paddle.height/4 && nextPt.y <= this.paddle.y + this.paddle.height) {
             paddleControls[dir](this.paddle, "stop"); // stop moving if the point is exactly in the middle
         }
         else

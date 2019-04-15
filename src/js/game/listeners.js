@@ -32,4 +32,16 @@ export default function setupUI(game, ctx) {
             setTimeout(() => game.resume(), 300);
         });
     });
+
+    // tune difficulty factor
+    const npc_ids = [0, 1];
+    for(var i in npc_ids) {
+        var pid = parseInt(i)+1;
+        document.querySelector(`#p${pid}-df`).addEventListener('change', (e) => {
+            const elem = e.target; 
+            const diffVal = parseFloat(elem.value);
+            console.log(diffVal);
+            game.player.setDifficultyFactorByID(i,diffVal);
+        });
+    }
 }
