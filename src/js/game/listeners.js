@@ -9,7 +9,9 @@ export default function setupUI(game, ctx) {
         ctx.canvas.style.border = '1px solid lightgrey';
         game.start();
     });
-    document.querySelector('#icon-restart').addEventListener('click', e => game.restart());
+
+    // restart button
+    document.querySelector('#icon-restart').addEventListener('click', e => game.restart(game.type));
 
     // set game type 
     const curGameClass = `#btn-${game.type}`
