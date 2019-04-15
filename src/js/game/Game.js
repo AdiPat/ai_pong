@@ -124,7 +124,13 @@ export default class Game {
                         playSound(this.config.audio.bounce);
 
                         // this is where the ball speed changes, add collision factor here
-                        ball.setSpeed(-ball.speedX, ball.speedY);
+                        //ball.setSpeed(-ball.speedX, ball.speedY);
+
+                        if(ball.speedX < 0)
+                            ball.collision(p0);
+                        else
+                            ball.collision(p1);
+                        
                         this.player.resetNPC();
                     }
                     else {

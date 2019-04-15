@@ -49,4 +49,31 @@ export default class Ball extends Component {
         // reset after 1 second
         setTimeout(() => resetFunc(spMin, spMax-spMin), delay);
     }
+
+    collision(paddle, minSpeed = 3) {
+        const cf = paddle.cfactor;
+
+        let new_vx = -this.speedX * cf;
+
+        // don't let speed drop too low
+        if(Math.abs(new_vx) <= 3) {
+            const vmod = Math.abs(new_vx) + MinSpeed;
+            new_vx = (new_vx > 0)?(vmod):(-vmod);
+        }
+        //const old_ang = this.getVelocityAngle(-this.speedX, this.speedY);
+        this.speedX = new_vx; 
+        //const new_ang = this.getVelocityAngle(new_vx, this.speedY);
+    }
+
+    /**
+     * 
+     * @param {number} vx 
+     * @param {number} vy
+     * Returns collision angle, added as a test function to compare elastic and inelastic
+     * collision difference.
+     */
+    getVelocityAngle(vx = this.speedX, vy = this.speedY) {
+        const ang = Math.atan(vy / vx);
+        return (180/Math.PI) * ang;
+    }
 }

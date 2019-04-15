@@ -1,4 +1,5 @@
 import Component from './Component';
+import { randomFloat } from '../game/utils';
 
 export default class Paddle extends Component {
 
@@ -11,11 +12,13 @@ export default class Paddle extends Component {
      * @param {number} speed Paddle speed
      * @param {string} color - hex code or named color value
      * @param {CanvasRenderingContext2D} ctx 
+     * @param {number} cfactor - Collision factor
      */
-    constructor(x, y, width, height, speed, color, ctx) {
+    constructor(x, y, width, height, speed, color, ctx, cfactor = randomFloat(0.6, 0.95)) {
         super(x,y,0,speed,color,ctx);
         this.width = width;
         this.height = height;
+        this.cfactor = cfactor;
     }
 
     render() {
