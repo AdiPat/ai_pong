@@ -56,8 +56,6 @@ export default class Player {
 
     initNPC(pid) {
         let curNPC = new AI_Bot(this.game, this.game.objects.ball, this.game.objects[`paddle-${pid}`]);
-
-
         this.npc[pid] = curNPC;
     }
 
@@ -70,6 +68,14 @@ export default class Player {
     }
 
     resetNPC() {
+        this.types.forEach((v,idx) => {
+            if(!v)
+                this.npc[idx].reset();
+        });
         return;
+    }
+
+    isNPCPresent() {
+        return this.npc[0] || this.npc[1];
     }
 }

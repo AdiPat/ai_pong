@@ -15,8 +15,9 @@ export default class Game {
         this.objects = objects;
         this.config = config;
         this.paused = false;
-        this.score = [0,0];
+        this.score = [0, 0];
         this.player = new Player(this, 2, [true, false], [config.keys.p0, config.keys.p1]);
+        console.log(this.objects);
     }
 
     /**
@@ -45,8 +46,8 @@ export default class Game {
         // render scores
         ctx.font = this.config.font;
         ctx.fillStyle = this.config.colors.score;
-        ctx.fillText(`${this.score[0]}`, (1/4)*canvas.width, 40);
-        ctx.fillText(`${this.score[1]}`, (3/4)*canvas.width, 40);
+        ctx.fillText(`${this.score[0]}`, (1 / 4) * canvas.width, 40);
+        ctx.fillText(`${this.score[1]}`, (3 / 4) * canvas.width, 40);
 
         //
         Object.keys(this.objects).forEach((k) => {
@@ -57,7 +58,7 @@ export default class Game {
 
     updateScore() {
         const ball = this.objects['ball']
-        let pid = (ball.speedX > 0)?0:1; // ball is moving towards left
+        let pid = (ball.speedX > 0) ? 0 : 1; // ball is moving towards left
         this.score[pid] += 1;
         console.log(this.score);
     }
@@ -74,49 +75,58 @@ export default class Game {
         const xlimit = this.canvasCtx.canvas.width;
         const ylimit = this.canvasCtx.canvas.height;
 
-        
-        // TODO: Dirty, but works for now
-        // It's not possible to add a shadow ball with this
-        // need a more general function
-        if((ball.x + ball.radius >= xlimit) || (ball.x - ball.radius <= 0)) {
-            if((ball.y > p0.y && ball.y < p0.y + p0.height) || (ball.y > p1.y && ball.y < p1.y + p1.height)) {
-                playSound(this.config.audio.bounce);
-                // reset npc
-                this.player.resetNPC();
-                ball.setSpeed(-ball.speedX, ball.speedY);
-            }
-            else {
-                // play sound
-                playSound(this.config.audio.fail);
-                // update score
-                this.updateScore();
-                // reset npc
-                this.player.resetNPC();
-                // reset ball
-                ball.reset();
-            }
-        }
-    
-        // ball and vertical bounds
-        if((ball.y + ball.radius >= ylimit) || (ball.y - ball.radius <= 0))
-            ball.setSpeed(ball.speedX, -ball.speedY);
 
+        
+        // Abstract this out and add a special case for shadow ball
+
+        let check_ball_collisions = function (ball, p0, p1, xlimit, ylimit, isShadow = false) {
+            if (!isShadow) {
+                if ((ball.x + ball.radius >= xlimit) || (ball.x - ball.radius <= 0)) {
+                    if ((ball.y > p0.y && ball.y < p0.y + p0.height) || (ball.y > p1.y && ball.y < p1.y + p1.height)) {
+                        playSound(this.config.audio.bounce);
+                        // reset npc
+                        ball.setSpeed(-ball.speedX, ball.speedY);
+                        this.player.resetNPC();
+                    }
+                    else {
+                        // play sound
+                        playSound(this.config.audio.fail);
+                        // update score
+                        this.updateScore();
+                        // reset npc
+                        // reset ball
+                        ball.reset();
+                        this.player.resetNPC();
+                    }
+                }
+            }
+
+            // ball and vertical bounds
+            if ((ball.y + ball.radius >= ylimit) || (ball.y - ball.radius <= 0))
+                ball.setSpeed(ball.speedX, -ball.speedY);
+        }.bind(this);
+
+        check_ball_collisions(ball, p0, p1, xlimit, ylimit);
+
+        if(this.player.isNPCPresent())
+            check_ball_collisions(this.objects['ball_shadow'], p0, p1, xlimit, ylimit, true);
 
         // paddles
-        if(p0.y + p0.height >= ylimit) {
-            p0.setLoc(0,ylimit - p0.height);
-        } 
-        if(p0.y <= 0) {
-            p0.setLoc(0,0);
+        if (p0.y + p0.height >= ylimit) {
+            p0.setLoc(0, ylimit - p0.height);
+        }
+        if (p0.y <= 0) {
+            p0.setLoc(0, 0);
         }
 
-        if(p1.y + p1.height >= ylimit) {
-            p1.setLoc(xlimit - p1.width,ylimit- p1.height);
-        } 
-
-        if(p1.y <= 0) {
-            p1.setLoc(xlimit - p1.width,0);
+        if (p1.y + p1.height >= ylimit) {
+            p1.setLoc(xlimit - p1.width, ylimit - p1.height);
         }
+
+        if (p1.y <= 0) {
+            p1.setLoc(xlimit - p1.width, 0);
+        }
+
     }
 
     /**
@@ -126,8 +136,8 @@ export default class Game {
         if (!this.paused) {
             this.detectCollisions();
             // if npc exists, perform npc movements
-            this.player.types.forEach((v,idx) => {
-                if(!v) {
+            this.player.types.forEach((v, idx) => {
+                if (!v) {
                     let controls = this.player.getNPCControls();
                     this.player.npc[idx].control(controls);
                 }
@@ -147,12 +157,12 @@ export default class Game {
     }
 
     restart() {
-        if(!this.paused) {  
-            this.score = [0,0];
-            this.objects.ball.reset(); 
+        if (!this.paused) {
+            this.score = [0, 0];
+            this.objects.ball.reset();
         }
     }
- 
+
     pause() {
         this.paused = true;
     }

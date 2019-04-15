@@ -48,7 +48,7 @@
             "y": 0,
             "max": 5
         },
-        "paddle-max": 4
+        "paddle-max": 5
     },
     "locs": {
         "ball": {

@@ -14,40 +14,21 @@ export default class AI_Bot {
         this.ball = ball; 
         this.paddle = paddle;
         this.difficulty = difficulty;
+        let shadowBall = new Ball(this.ball.x, this.ball.y, this.ball.radius, this.ball.speedX * this.difficulty, this.ball.speedY * this.difficulty, 'cyan', this.game.canvasCtx);
+        this.game.objects['ball_shadow'] = shadowBall;
     }
 
     // TODO: Fix this dynamic path prediction
     predictPath() {
-        let boostFactor = this.difficulty; 
-        if(this.ball.speedX < 0)
-            boostFactor = 1;
+        const sb = this.game.objects['ball_shadow'];
 
-        // simulate a shadow ball that's faster than the actual ball
-        // TODO: Doesn't work as desired. Does this run within 16ms? 
-        const t = Math.abs(this.ball.x / this.ball.speedX);
-        var vx, vy = [this.ball.speedX * boostFactor, this.ball.speedY * boostFactor];
-        let max_h, max_w = [this.game.config.dimensions.board.height, this.game.config.dimensions.board.width];
-        const dtotal = Math.abs(vx * t); // total x distance covered 
-        let cur_x = 0; // current covered distance by shadow ball
-        let nextPoint = {x: 0, y: 0};
-        let t_rem = t;
-        while(cur_x <= dtotal) {
-            const dvertical = (vy > 0)?(max_h - this.ball.y):(this.ball.y);
+        return {x: sb.x, y: sb.y};
+    }
 
-            let tcur = Math.abs(dvertical/vy);
-            if(tcur >= t) {
-                nextPoint.x = dtotal;
-                nextPoint.y = (vy > 0)?(t_rem * vy):(max_h - t_rem * vy);
-                break;
-            }
-            t_rem -= tcur;
-            cur_x += Math.abs(tcur * vx);
-            vy *= -1; // collision, change direction   
-        }
-
-
-        return {x: nextPoint.x, y: nextPoint.y};
-        
+    reset() {
+        //this.game.objects['shadow'] = shadowBall;
+        this.game.objects['ball_shadow'].setLoc(this.ball.x, this.ball.y);
+        this.game.objects['ball_shadow'].setSpeed(this.ball.speedX * this.difficulty, this.ball.speedY * this.difficulty);
     }
 
     // checks path and moves paddle towards point
@@ -58,9 +39,10 @@ export default class AI_Bot {
 
         let dir = "down"; 
         let nextPt = this.predictPath();
-        // debug console.log(nextPt.y, this.paddle.y);
+        //debug 
+        //console.log(nextPt.y, this.paddle.y);
         
-        if(nextPt.y < this.paddle.y)
+        if(nextPt.y < this.paddle.y + this.paddle.height/2)
             dir = "up";
 
         if(nextPt.y >= this.paddle.y && nextPt.y <= this.paddle.y + this.paddle.height) {

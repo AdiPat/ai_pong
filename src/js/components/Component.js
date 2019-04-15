@@ -55,7 +55,7 @@ export default class Component {
             return true;
         }
         // out of bounds
-        console.log("Component out of bounds: ", this);
+        //console.log("Component out of bounds: ", this);
         return false;
     }
 
