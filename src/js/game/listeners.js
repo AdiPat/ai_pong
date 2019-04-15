@@ -33,27 +33,3 @@ export default function setupUI(game, ctx) {
         });
     });
 }
-
-/**
- * All key events except paddle controls
- */
-// function setupKeyEvents(game, ctx, callbacks = undefined) {
-//     const KEY_SPACE = 32; // temp 
-
-//     document.addEventListener('keydown', (event) => {
-//         if (event.keyCode == KEY_SPACE) {
-//             const menuElem = document.querySelector('.menu-box');
-//             // check if the game has been started first
-//             if(!game.paused) {
-//                 menuElem.style.zIndex = '500';
-//                 menuElem.style.opacity = '1';
-//                 game.pause();
-//                 return;
-//             } else {
-//                 menuElem.style.zIndex = '-10';
-//                 menuElem.style.opacity = '0';
-//                 game.resume();
-//             }
-//         }
-//     });
-// }

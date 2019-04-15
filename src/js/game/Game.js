@@ -232,7 +232,6 @@ export default class Game {
         document.addEventListener('keydown', (event) => {
             if (event.keyCode == KEY_SPACE) {
                 // check if the game has been started first
-                console.log("SPACE")
                 if(!this.paused) 
                     this.pause();
                 else 
