@@ -14,7 +14,7 @@ export default class AI_Bot {
         this.ball = ball; 
         this.paddle = paddle;
         this.difficulty = difficulty;
-        let shadowBall = new Ball(this.ball.x, this.ball.y, this.ball.radius, this.ball.speedX * this.difficulty, this.ball.speedY * this.difficulty, 'cyan', this.game.canvasCtx);
+        let shadowBall = new Ball(this.ball.x, this.ball.y, this.ball.radius, this.ball.speedX * this.difficulty, this.ball.speedY * this.difficulty, 'transparent', this.game.canvasCtx);
         this.game.objects['ball_shadow'] = shadowBall;
     }
 

@@ -10,12 +10,22 @@
 </head>
 
 <body>
-    <h1>AI Pong</h1>
-    <h2>Press Spacebar for menu</h2>
-    <div id="gameArea">
-        <img src="restart.png" id="icon-restart"/>
+    <div class="heading">
+        <h1>
+            AI Pong
+            <span class="sub">Press Spacebar for menu</span>
+        </h1>
+        <div class="configs">
+            <img src="restart.png" id="icon-restart"/>
+            <div class="configs__option">1 Player</div>
+            <div class="configs__option">2 Player</div>
+            <div class="configs__option">AI mode</div>
+        </div>
+    </div>
+    <div class="gameArea">
         <canvas id="canvas"></canvas>
     </div>
+
     <a class="btn-start">Start</a>
     <div class="menu-box">
         <ul class="controls-list">
