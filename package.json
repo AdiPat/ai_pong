@@ -15,7 +15,7 @@
     "build": "webpack"
   },
   "author": "Aditya Patange",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "autoprefixer": "^7.1.4",
     "concat": "^1.0.3",

@@ -12,11 +12,11 @@ To run this on your local system, you need to first install npm (Node Package Ma
 npm install
 ```
 
-**Run the game on localhost, port 8000 by default.**
+**Run the game on localhost, port 8080 by default.**
 ```
 npm start
 ```
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the MIT License - see the LICENSE file for details.
