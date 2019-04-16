@@ -292,4 +292,18 @@ export default class Game {
         this.paused = false;
     }
 
+    /**
+     * Resets everything
+     */
+    reset(delay,reset_score=true) {
+        this.objects['ball'].reset(delay);
+        this.player.resetNPC(delay);
+        this.objects['paddle-0'].reset();
+        this.objects['paddle-1'].reset();
+
+        if(reset_score) {
+            this.score = [0,0];
+        }
+    }
+
 }

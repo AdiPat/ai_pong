@@ -42,6 +42,7 @@ export default function setupUI(game, ctx) {
             const diffVal = parseFloat(elem.value);
             console.log(diffVal);
             game.player.setDifficultyFactorByID(i,diffVal);
+            game.reset();
         });
     }
 
@@ -59,6 +60,7 @@ export default function setupUI(game, ctx) {
                 game.objects['paddle-0'].boostSpeed(diffVal, true);
                 game.objects['paddle-1'].boostSpeed(diffVal, true);
             }
+            game.reset();
         });
     }
 
