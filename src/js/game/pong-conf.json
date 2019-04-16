@@ -47,6 +47,10 @@
         }
     },
     "speed": {
+        "base_speed": 2,
+        "min_factor": 1,
+        "max_factor": 10,
+        "step": 0.5,
         "ball": {
             "x": -10,
             "y": 10

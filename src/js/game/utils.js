@@ -22,3 +22,16 @@ export function randomInt(a, b) {
 export function randomFloat(a, b) {
     return Math.random() * (b-a) + a;
 }
+
+export function random(numList) {
+    const idx = randomInt(0, numList.length);
+    return numList[idx];
+}
+
+export function randomDir() {
+    return random([-1,1]);
+}
+
+export function getSign(val) {
+    return (val / Math.abs(val));
+}

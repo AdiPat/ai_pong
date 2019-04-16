@@ -1,7 +1,7 @@
 import Ball from '../components/Ball';
 import Paddle from "../components/Paddle";
 import Player from "./Player";
-import { playSound } from "./utils";
+import { playSound, randomFloat, randomInt, random, randomDir } from "./utils";
 
 export default class Game {
 
@@ -15,6 +15,10 @@ export default class Game {
         this.name = name;
         this.canvasCtx = ctx;
         this.config = config;
+        this.base_speed = config.speed.base_speed;
+        this.minFactor = config.speed.min_factor;
+        this.maxFactor = config.speed.max_factor; // keep the last few points to customize
+        this.speedStep = config.speed.step;
         this.objects = this.generateObjectsFromConfig();
         this.paused = false;
         this.max_counter = config.score_counter;
@@ -35,9 +39,18 @@ export default class Game {
         const colors = CONFIGS.colors;
         const ballLoc = CONFIGS.locs.ball;
         const locs = CONFIGS.locs;
-        const ballSpeed = CONFIGS.speed.ball;
+
+        const baseSpeed = this.base_speed;
+        const [minF, maxF] = [this.minFactor, this.maxFactor]
+
+        const ballSpeed = {
+            x: baseSpeed * randomInt(minF, maxF) * randomDir(),
+            y: baseSpeed * randomInt(minF, maxF) * randomDir()
+        };
+
         const pSpeed = CONFIGS.speed.p0;
         let b = new Ball(ballLoc.x, ballLoc.y, ballDim.radius, ballSpeed.x, ballSpeed.y, colors.ball, this.canvasCtx);
+        b.setBaseSpeed(baseSpeed);
         let p0 = new Paddle(locs.p0.x, locs.p0.y, pDim.width, pDim.height, pSpeed.y, colors.paddle, this.canvasCtx);
         let p1 = new Paddle(locs.p1.x, locs.p1.y, pDim.width, pDim.height, pSpeed.y, colors.paddle, this.canvasCtx);
         return {
@@ -170,11 +183,11 @@ export default class Game {
             // ball and vertical bounds
             if((ball.y + ball.radius >= ylimit)) {
                 ball.setLoc(ball.x, ylimit - 1.5 * ball.radius);
-                ball.setSpeed(ball.speedX, -ball.speedY);
+                ball.reverseY();
             }
             else if((ball.y - ball.radius <= 0)) {
                 ball.setLoc(ball.x, 0+ 1.5*ball.radius);
-                ball.setSpeed(ball.speedX, -ball.speedY);
+                ball.reverseY();
             }
         }.bind(this);
 

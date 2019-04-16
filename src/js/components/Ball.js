@@ -1,4 +1,5 @@
 import Component from './Component';
+import { randomDir, randomFloat } from '../game/utils';
 
 
 export default class Ball extends Component {
@@ -34,20 +35,25 @@ export default class Ball extends Component {
      * randomly generates speed in the range [3,8] 
      * 
      */
-    reset(delay=1000, speed_range=[6,12]) {
+    reset(delay=1000, speed_range=[2,12]) {
 
         this.setLoc(this.canvasCtx.canvas.width/2, this.canvasCtx.canvas.height/2);
         this.setSpeed(0,0);
 
         let [spMin, spMax] = speed_range;
         let resetFunc = function(spMin, spMax) {
-            const dirX = [-1,1][Math.floor((Math.random()*10))%2]; 
-            const dirY = [-1,1][Math.floor((Math.random()*10))%2]; 
-            this.setSpeed(dirX * (spMin+Math.floor(Math.random()*spMax)), dirY * (spMin+Math.floor(Math.random()*spMax)));
+            const dirX = randomDir();
+            const dirY = randomDir();
+            const speeds = {
+                x: dirX * randomFloat(spMin, spMax),
+                y: dirY * randomFloat(spMin, spMax)
+            };
+            console.log(speeds);
+            this.setSpeed(speeds.x, speeds.y);
         }.bind(this);
 
         // reset after 1 second
-        setTimeout(() => resetFunc(spMin, spMax-spMin), delay);
+        setTimeout(() => resetFunc(spMin, spMax), delay);
     }
 
     collision(paddle, minSpeed = 6, boost=false) {

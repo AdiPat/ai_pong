@@ -33,15 +33,26 @@
             <li><span>W / UP</span> Move paddle up</li>
             <li><span>S / DOWN</span> Move paddle down</li>
             <li><span>SPACE BAR </span> Pause/Play game</li>
-            <li><span>AI CONTROL</span>Difficulty Factor</li>
+            <li><span>AI NPC</span>Difficulty Factor</li>
             <li>
                 <div>
-                    <input type="range" id="p1-df" name="volume" min="0.8" max="2.8" step="0.1">
+                    <input type="range" id="p1-df" name="ai-factor" min="0.8" max="2.8" step="0.1">
                     <label for="volume">P1</label>
                 </div>
                 <div>
-                    <input type="range" id="p2-df" name="volume" min="0.8" max="2.8" step="0.1">
+                    <input type="range" id="p2-df" name="ai-factor" min="0.8" max="2.8" step="0.1">
                     <label for="volume">P2</label>
+                </div>
+            </li>
+            <li><span>SPEED</span>Change ball and paddle speed</li>
+            <li>
+                <div>
+                    <input type="range" id="ball-speed" name="ball-speed" min="1" max="12" step="1">
+                    <label for="volume">Ball</label>
+                </div>
+                <div>
+                    <input type="range" id="paddle-speed" name="paddle-speed" min="1" max="12" step="1">
+                    <label for="volume">Paddle</label>
                 </div>
             </li>
         </ul>

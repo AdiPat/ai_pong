@@ -23,6 +23,7 @@ function getCanvasContext() {
 
 let ctx = getCanvasContext();
 let game = new Game('ai-pong', ctx, GAME_CONFIG);
+window.gameObj = game; // testing
 setupUI(game, ctx);
 
 // this is done when the start button is clicked, so not needed

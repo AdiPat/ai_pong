@@ -1,6 +1,7 @@
 /* 
 *    Represents a game component
 */
+import { getSign } from '../game/utils';
 
 export default class Component {
 
@@ -20,6 +21,7 @@ export default class Component {
         this.speedY = speedY;
         this.color = color; 
         this.canvasCtx = ctx;
+        this.base_speed = 1;
     }
 
     /**
@@ -50,6 +52,35 @@ export default class Component {
         this.speedX = vx; 
         this.speedY = vy; 
     }   
+
+    /**
+     * 
+     * @param {number} k 
+     */
+    boostSpeed(k, base=true) {
+        if(base) {
+            this.setSpeed(getSign(this.speedX) * this.base_speed * k, getSign(this.speedY) * this.base_speed);
+        }
+        else
+            this.setSpeed(k * this.speedX, k * this.speedY);
+    }
+
+    setBaseSpeed(bspeed) {
+        this.base_speed = bspeed; 
+    }
+
+
+    /**
+     * 
+     * Flips speed direction
+     */
+    reverseX() {
+        this.speedX = -this.speedX;
+    }
+
+    reverseY() {
+        this.speedY = -this.speedY; 
+    }
 
     /**
      * 
