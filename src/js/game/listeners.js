@@ -54,12 +54,14 @@ export default function setupUI(game, ctx) {
             const diffVal = parseFloat(elem.value);
             if(elem.id === 'ball-speed') {
                 game.objects['ball'].boostSpeed(diffVal, true);
+                const b = game.objects['ball'];
+                //console.log(b.speedX, b.speedY);
             }
             if(elem.id === 'paddle-speed') {
                 game.objects['paddle-0'].boostSpeed(diffVal, true);
                 game.objects['paddle-1'].boostSpeed(diffVal, true);
             }
-            game.reset();
+            game.reset(1000,true,false);
         });
     }
 

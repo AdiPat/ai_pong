@@ -295,8 +295,8 @@ export default class Game {
     /**
      * Resets everything
      */
-    reset(delay,reset_score=true) {
-        this.objects['ball'].reset(delay);
+    reset(delay,reset_speed=true, reset_score=true) {
+        this.objects['ball'].reset(delay, reset_speed);
         this.player.resetNPC(delay);
         this.objects['paddle-0'].reset();
         this.objects['paddle-1'].reset();

@@ -35,7 +35,7 @@ export default class Ball extends Component {
      * randomly generates speed in the range [3,8] 
      * 
      */
-    reset(delay=1000, speed_range=[2,12]) {
+    reset(delay=1000, change_speed=true, speed_range=[2,12]) {
 
         this.setLoc(this.canvasCtx.canvas.width/2, this.canvasCtx.canvas.height/2);
         this.setSpeed(0,0);
@@ -44,10 +44,19 @@ export default class Ball extends Component {
         let resetFunc = function(spMin, spMax) {
             const dirX = randomDir();
             const dirY = randomDir();
-            const speeds = {
-                x: dirX * randomFloat(spMin, spMax),
-                y: dirY * randomFloat(spMin, spMax)
+
+            let speeds = {
+                x: dirX * this.speedX,
+                y: dirY * this.speedY
             };
+
+            if(change_speed) {
+                speeds = {
+                    x: dirX * randomFloat(spMin, spMax),
+                    y: dirY * randomFloat(spMin, spMax)
+                };
+            }
+            
             //console.log(speeds);
             this.setSpeed(speeds.x, speeds.y);
         }.bind(this);

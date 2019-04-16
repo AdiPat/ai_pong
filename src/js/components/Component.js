@@ -59,7 +59,7 @@ export default class Component {
      */
     boostSpeed(k, base=true) {
         if(base) {
-            this.setSpeed(getSign(this.speedX) * this.base_speed * k, getSign(this.speedY) * this.base_speed);
+            this.setSpeed(getSign(this.speedX) * this.base_speed * k, k * getSign(this.speedY) * this.base_speed);
         }
         else
             this.setSpeed(k * this.speedX, k * this.speedY);
