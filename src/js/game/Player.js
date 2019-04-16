@@ -56,7 +56,7 @@ export default class Player {
     }
 
     initNPC(pid) {
-        const diffFactor = randomFloat(1.05, 1.4);
+        const diffFactor = this.game.config.ai_factor; 
         let curNPC = new AI_Bot(this.game, this.game.objects.ball, this.game.objects[`paddle-${pid}`], diffFactor);
         this.npc[pid] = curNPC;
     }

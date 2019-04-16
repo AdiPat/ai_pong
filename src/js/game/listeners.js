@@ -62,5 +62,19 @@ export default function setupUI(game, ctx) {
         });
     }
 
+    setDefaults(game);
+}
 
+function setDefaults(game) {
+    const input_elems = ['#p1-df', '#p2-df', '#ball-speed', '#paddle-speed'].map((v) => document.querySelector(v));
+    const defaults = [
+        game.config['ai_factor'],
+        game.config['ai_factor'],
+        Math.abs(game.config.speed.ball.x),
+        game.config.speed['paddle-max']
+    ]; 
+
+    input_elems.forEach((elem, idx) => {
+        elem.setAttribute("value", defaults[idx]);
+    });
 }
