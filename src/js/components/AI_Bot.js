@@ -49,8 +49,8 @@ export default class AI_Bot {
             if(this.ball.speedX < 0)
                 return {x: sb.x, y: sb.y};
         }
-
-        return {x: this.paddle.x, y: this.paddle.y };
+        // don't move
+        return false;
     }
 
     setDifficulty(dfactor) {
@@ -80,6 +80,11 @@ export default class AI_Bot {
 
         let dir = "down"; 
         let nextPt = this.predictPath();
+
+        if(!nextPt) {
+            paddleControls[dir](this.paddle, "stop"); 
+            return;
+        }
         
         if(nextPt.y < this.paddle.y + this.paddle.height/2)
             dir = "up";
