@@ -11,7 +11,7 @@
     "compress:css": "node-sass dist/css/style.prefix.css dist/css/style.css --output-style compressed",
     "clean:css": "rm -f dist/css/style.comp.css dist/css/style.prefix.css",
     "build:css": "npm-run-all compile:sass prefix:css compress:css clean:css",
-    "watch:sass": "nodemon -e scss -x \"npm run compile:sass\"",
+    "watch:sass": "nodemon -e scss -x \"npm run build:css\"",
     "build": "webpack"
   },
   "author": "Aditya Patange",
