@@ -64,9 +64,22 @@ function getCanvasContext() {
     return ctx;
 }
 
+// adapts objects according to screen size
+function adaptConfig(ctx, config) {
+
+    if(ctx.canvas.width < breakpoints.msmall) {
+        config.dimensions.ball.radius = 5;
+        config.dimensions.paddle.height = 50;
+        config.dimensions.paddle.width = 5; 
+    }
+
+    return config;
+}
+
 
 let ctx = getCanvasContext();
-let game = new Game('ai-pong', ctx, GAME_CONFIG);
+let config = adaptConfig(ctx, GAME_CONFIG); 
+let game = new Game('ai-pong', ctx, config);
 window.gameObj = game; // testing
 setupUI(game, ctx);
 
