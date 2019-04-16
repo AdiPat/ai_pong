@@ -44,8 +44,10 @@ export default class Game {
         const [minF, maxF] = [this.minFactor, this.maxFactor]
 
         const ballSpeed = {
-            x: baseSpeed * randomInt(minF, maxF) * randomDir(),
-            y: baseSpeed * randomInt(minF, maxF) * randomDir()
+            //x: baseSpeed * randomInt(minF, maxF) * randomDir(),
+            //y: baseSpeed * randomInt(minF, maxF) * randomDir()
+            x: baseSpeed * 2,
+            y: baseSpeed * 2
         };
 
         const pSpeed = CONFIGS.speed['paddle-max']; 
@@ -152,7 +154,7 @@ export default class Game {
                 const boost = (this.counter) >= (this.max_counter*2);
 
                 // add a small error to smooth out animations
-                if((ball.x - ball.radius <= p0.width) && (ball.y >= (p0.y - 5) && ball.y <= (p0.y + p0.height + 5))) {
+                if((ball.x - ball.radius <= p0.width) && (ball.y >= (p0.y - ball.radius) && ball.y <= (p0.y + p0.height + ball.radius))) {
                     // left paddle
                     playSound(this.config.audio.bounce);
                     //console.log(this.counter, this.max_counter*2, boost);
@@ -162,7 +164,7 @@ export default class Game {
                     // so that the shadow ball is calibrated according to it's difficulty setting
                     this.player.resetNPCByID(1,0);
                 }
-                else if((ball.x + ball.radius >= xlimit-p1.width) && (ball.y > (p1.y - 5) && ball.y < p1.y + (p1.height+5))) {
+                else if((ball.x + ball.radius >= xlimit-p1.width) && (ball.y > (p1.y - ball.radius) && ball.y < p1.y + (p1.height+ball.radius))) {
                     playSound(this.config.audio.bounce);
                     //console.log(this.counter, this.max_counter*2, boost);
                     ball.collision(p1, 6, boost);
