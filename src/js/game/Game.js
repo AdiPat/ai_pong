@@ -132,8 +132,10 @@ export default class Game {
         ctx.fillText(`${this.score[1]}`, (3 / 4) * canvas.width, 40);
 
         Object.keys(this.objects).forEach((k) => {
-            let curObj = this.objects[k];
-            curObj.render();
+            if(k != 'ball_shadow') {
+                let curObj = this.objects[k];
+                curObj.render();
+            }
         });
     }
 
