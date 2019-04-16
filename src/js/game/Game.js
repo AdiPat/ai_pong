@@ -37,8 +37,8 @@ export default class Game {
         const boardDim = CONFIGS.dimensions.board;
         const ballDim = CONFIGS.dimensions.ball;
         const colors = CONFIGS.colors;
-        const ballLoc = CONFIGS.locs.ball;
-        const locs = CONFIGS.locs;
+        let ballLoc = CONFIGS.locs.ball;
+        let locs = CONFIGS.locs;
 
         const baseSpeed = this.base_speed;
         const [minF, maxF] = [this.minFactor, this.maxFactor]
@@ -49,6 +49,14 @@ export default class Game {
             x: baseSpeed * 2,
             y: baseSpeed * 2
         };
+
+        // set ball and paddle locations dynamically
+        ballLoc.x = boardDim.width/2;
+        ballLoc.y = boardDim.height/2;
+        locs.p0.x = 0 + pDim.width;
+        locs.p0.y = ballLoc.y;
+        locs.p1.x = boardDim.width - pDim.width;
+        locs.p1.y = locs.p0.y;
 
         const pSpeed = CONFIGS.speed['paddle-max']; 
         let b = new Ball(ballLoc.x, ballLoc.y, ballDim.radius, ballSpeed.x, ballSpeed.y, colors.ball, this.canvasCtx);
@@ -64,13 +72,14 @@ export default class Game {
 
     debug() {
         // to see shadow ball in action
-        this.objects['ball_shadow'].color = 'cyan';
+        //this.objects['ball_shadow'].color = 'cyan';
+        console.log(this.canvasCtx.canvas.height, this.canvasCtx.canvas.width);
     }
     /**
      * Updates all objects
      */
     update() {
-        //this.debug();
+        this.debug();
         Object.keys(this.objects).forEach((k) => {
             let curObj = this.objects[k];
             curObj.move();

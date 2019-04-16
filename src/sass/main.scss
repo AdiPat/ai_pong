@@ -15,6 +15,10 @@ $color-bg: lighten(black, 10%);
 html {
     font-size: 62.5%;
     font-family: 'Montserrat', sans-serif;
+
+    @media only screen and (max-width: $bp-medium) {
+        font-size: 50%;
+    }
 }
 
 body {
@@ -24,6 +28,10 @@ body {
     display: flex;
     flex-direction: column;
     padding: 2rem 5rem 2rem 5rem;
+
+    @media only screen and (max-width: $bp-msmall) {
+        padding: 1rem;
+    }
 }
 
 #gameArea {
@@ -32,6 +40,11 @@ body {
   height: 100%;
   width: 100%;
   margin: 2rem;
+
+  @media only screen and (max-width: $bp-msmall) {
+      margin: 0;
+      padding: 1rem;
+  }
 }
 
 .configs {
@@ -53,6 +66,10 @@ body {
         font-weight: 600;
         transition: all 0.7s;
 
+        @media only screen and (max-width: $bp-msmall) {
+            font-size: 1rem;
+        }
+
         &:hover {
             background-color: $color-primary;
             color: black;
@@ -72,6 +89,10 @@ body {
     justify-content: center;
     align-items: center;
     border-bottom: 1px dashed lightgrey;
+
+    @media only screen and (max-width: $bp-small) {
+        flex-direction: column;
+    }
 }
 
 h1 {
@@ -83,6 +104,10 @@ h1 {
     font-weight: 300;
     text-align: center;
     flex: 1;
+
+    @media only screen and (max-width: $bp-msmall) {
+        font-size: 4.8rem;
+    }
 }
 
 .sub {
@@ -90,6 +115,10 @@ h1 {
     font-size: 1.6rem;
     color: white;
     margin: 0;
+
+    @media only screen and (max-width: $bp-medium) {
+        display: none;
+    }
 }
 
 .btn-start {
@@ -134,20 +163,41 @@ h1 {
     display: block;
     //border-top: 1px solid $color-primary;
     z-index: 100;
+
+    @media only screen and (max-width: $bp-medium) {
+        //margin: 0;
+    }
 }
 
 footer {
-    font-size: 1.6rem;
-    color: white;
-    font-weight: 300;
-    position: absolute;
-    right: 3rem;
-    bottom: 3rem;
-    line-height: 1.7;
-    
-    @media only screen and (max-width: $bp-medium) {
-        display: none;
+    a {
+        font-size: 1.6rem;
+        color: white;
+        font-weight: 300;
+        position: fixed;
+        z-index: 500;
+        right: 3rem;
+        bottom: 3rem;
+        line-height: 1.7;
+        text-decoration: none;
+        transition: border-bottom 1s;
+        border-bottom: 1px solid transparent;
+
+        strong {
+            color: $color-primary;
+        }
+
+        &:hover {
+            border-bottom: 1px solid $color-primary;
+        }
+        
+        @media only screen and (max-width: $bp-medium) {
+            right: 1rem; 
+            bottom: 1.6rem;
+            font-size: 1.2rem;
+        }
     }
+
 }
 
 .menu-box {

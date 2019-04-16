@@ -5,18 +5,62 @@ import setupUI from './game/listeners';
 import Player from './game/Player';
 
 
-const GAME_CONFIG = require('./game/pong-conf.json')
+let GAME_CONFIG = require('./game/pong-conf.json')
+
+
+const breakpoints = {
+    large: 1024,
+    medium: 864,
+    msmall: 768,
+    small: 560
+};
+
+/**
+ * Adapts to device screen size
+ */
+function adaptCanvas(canvas) {
+    const canvas_sizes = {
+        large: [480, 800],
+        medium: [480, 640],
+        msmall: [480, window.innerWidth-16],
+        small: [320, window.innerWidth-16]
+    };
+
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+
+    canvas.width = GAME_CONFIG.dimensions.board.width;
+    canvas.height = GAME_CONFIG.dimensions.board.height;
+
+    if(w < breakpoints.medium) {
+        canvas.height = canvas_sizes.medium[0];
+        canvas.width = canvas_sizes.medium[1];
+    }
+
+    if(w < breakpoints.msmall) {
+        canvas.height = canvas_sizes.msmall[0];
+        canvas.width = canvas_sizes.msmall[1];
+    }
+
+    if(w < breakpoints.small) {
+        canvas.height = canvas_sizes.small[0];
+        canvas.width = canvas_sizes.small[1];
+    }
+    return canvas;
+}
+
 
 /**
  * Initializes canvas
  */
 function getCanvasContext() {
-    const CANVAS_WIDTH = GAME_CONFIG.dimensions.board.width;
-    const CANVAS_HEIGHT = GAME_CONFIG.dimensions.board.height;
     var canvas = document.querySelector('#canvas');
+    canvas = adaptCanvas(canvas);
+    // alter configs if needed
+    GAME_CONFIG.dimensions.board.width = canvas.width;
+    GAME_CONFIG.dimensions.board.height = canvas.height;
+    console.log(canvas.width, canvas.height);
     let ctx = canvas.getContext('2d');
-    canvas.width = CANVAS_WIDTH;
-    canvas.height = CANVAS_HEIGHT;
     return ctx;
 }
 

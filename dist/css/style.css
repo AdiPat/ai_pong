@@ -6,6 +6,9 @@
 html {
   font-size: 62.5%;
   font-family: 'Montserrat', sans-serif; }
+  @media only screen and (max-width: 54em) {
+    html {
+      font-size: 50%; } }
 
 body {
   background-color: #1a1a1a;
@@ -14,6 +17,9 @@ body {
   display: flex;
   flex-direction: column;
   padding: 2rem 5rem 2rem 5rem; }
+  @media only screen and (max-width: 48em) {
+    body {
+      padding: 1rem; } }
 
 #gameArea {
   position: relative;
@@ -21,6 +27,10 @@ body {
   height: 100%;
   width: 100%;
   margin: 2rem; }
+  @media only screen and (max-width: 48em) {
+    #gameArea {
+      margin: 0;
+      padding: 1rem; } }
 
 .configs {
   display: flex;
@@ -37,6 +47,9 @@ body {
     cursor: pointer;
     font-weight: 600;
     transition: all 0.7s; }
+    @media only screen and (max-width: 48em) {
+      .configs__option {
+        font-size: 1rem; } }
     .configs__option:hover {
       background-color: #75d8cd;
       color: black; }
@@ -50,6 +63,9 @@ body {
   justify-content: center;
   align-items: center;
   border-bottom: 1px dashed lightgrey; }
+  @media only screen and (max-width: 35em) {
+    .heading {
+      flex-direction: column; } }
 
 h1 {
   display: flex;
@@ -60,12 +76,18 @@ h1 {
   font-weight: 300;
   text-align: center;
   flex: 1; }
+  @media only screen and (max-width: 48em) {
+    h1 {
+      font-size: 4.8rem; } }
 
 .sub {
   font-weight: 300;
   font-size: 1.6rem;
   color: white;
   margin: 0; }
+  @media only screen and (max-width: 54em) {
+    .sub {
+      display: none; } }
 
 .btn-start, .btn-start:link, .btn-start:visited {
   position: absolute;
@@ -97,17 +119,27 @@ h1 {
   display: block;
   z-index: 100; }
 
-footer {
+footer a {
   font-size: 1.6rem;
   color: white;
   font-weight: 300;
-  position: absolute;
+  position: fixed;
+  z-index: 500;
   right: 3rem;
   bottom: 3rem;
-  line-height: 1.7; }
+  line-height: 1.7;
+  text-decoration: none;
+  transition: border-bottom 1s;
+  border-bottom: 1px solid transparent; }
+  footer a strong {
+    color: #75d8cd; }
+  footer a:hover {
+    border-bottom: 1px solid #75d8cd; }
   @media only screen and (max-width: 54em) {
-    footer {
-      display: none; } }
+    footer a {
+      right: 1rem;
+      bottom: 1.6rem;
+      font-size: 1.2rem; } }
 
 .menu-box {
   position: absolute;
