@@ -52,7 +52,6 @@ export default function setupUI(game, ctx) {
         document.querySelector(`#${speed_ids[i]}`).addEventListener('change', (e) => {
             const elem = e.target; 
             const diffVal = parseFloat(elem.value);
-            console.log(elem.id);
             if(elem.id === 'ball-speed') {
                 game.objects['ball'].boostSpeed(diffVal, true);
             }
