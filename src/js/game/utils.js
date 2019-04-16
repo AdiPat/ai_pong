@@ -11,7 +11,7 @@ export function playSound(path) {
         audio_lock = true;
         const aud = new Audio(path);
         aud.play();
-        setTimeout(() => { audio_lock = false }, 500);
+        setTimeout(() => { audio_lock = false }, 50);
     }   
 }
 

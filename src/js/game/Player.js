@@ -89,7 +89,8 @@ export default class Player {
      */
     resetNPCByID(id, delay=1000) {
         let resetFunc = function(idx) {
-            this.npc[idx].reset();
+            if(this.npc[idx])
+                this.npc[idx].reset();
         }.bind(this);
         setTimeout(() => resetFunc(id), delay);
     }
