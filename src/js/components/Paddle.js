@@ -43,6 +43,11 @@ export default class Paddle extends Component {
         this.setSpeed(0, this.curSpeed);
     }
 
+    boostSpeed(k) {
+        super.boostSpeed(k);
+        this.curSpeed = this.base_speed * k;
+    }
+
 
     /**
      * Resets paddle speed and position
