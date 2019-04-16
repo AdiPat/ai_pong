@@ -21,6 +21,7 @@ export default class Game {
         this.speedStep = config.speed.step;
         this.objects = this.generateObjectsFromConfig();
         this.paused = false;
+        this.started = false; // set this flag when the game begins
         this.max_counter = config.score_counter;
         this.counter = 0; // no. of turns for which score is unchanged
         this.score = [0, 0];
@@ -79,7 +80,7 @@ export default class Game {
      * Updates all objects
      */
     update() {
-        this.debug();
+        //this.debug();
         Object.keys(this.objects).forEach((k) => {
             let curObj = this.objects[k];
             curObj.move();
@@ -273,6 +274,7 @@ export default class Game {
     start() {
         this.init();
         requestAnimationFrame(this.loop.bind(this));
+        this.started = true;
     }
 
     /**
@@ -288,19 +290,19 @@ export default class Game {
     }
 
     pause() {
-        const menuElem = document.querySelector('.menu-box');
+        //const menuElem = document.querySelector('.menu-box');
         if (!this.paused) {
-            menuElem.style.zIndex = '500';
-            menuElem.style.opacity = '1';
+            //menuElem.style.zIndex = '500';
+            //menuElem.style.opacity = '1';
         }
         this.paused = true;
     }
 
     resume() {
-        const menuElem = document.querySelector('.menu-box');
+        //const menuElem = document.querySelector('.menu-box');
         if (this.paused) {
-            menuElem.style.zIndex = '-10';
-            menuElem.style.opacity = '0';
+            // menuElem.style.zIndex = '-10';
+            // menuElem.style.opacity = '0';
         }
         this.paused = false;
     }

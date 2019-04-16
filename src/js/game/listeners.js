@@ -2,12 +2,29 @@
  * User Interface related events
  */
 export default function setupUI(game, ctx) {
+    // settings button 
+
+    document.querySelector('#icon-settings').addEventListener('click', e => {
+        let elem = document.querySelector('.menu-box');
+        const className = 'menu-box__visible';
+        if(!elem.classList.contains(className) && game.started)
+            elem.classList.add(className);
+    });
+
     // start button
     document.querySelector('.btn-start').addEventListener('click', (e) => {
         e.target.style.zIndex = '-100';
         e.target.style.opacity = '0';
         //ctx.canvas.style.border = '1px solid lightgrey';
         game.start();
+    });
+
+    // close button for menu 
+    document.querySelector('.icon-close').addEventListener('click', (e) => {
+        let elem = document.querySelector('.menu-box');
+        const className = 'menu-box__visible';
+        if(elem.classList.contains(className) && game.started)
+            elem.classList.remove(className);
     });
 
     // restart button

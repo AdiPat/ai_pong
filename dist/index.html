@@ -16,7 +16,8 @@
             <span class="sub">Press Spacebar for menu</span>
         </h1>
         <div class="configs">
-            <img src="restart.png" id="icon-restart"/>
+            <img src="settings.png" class="configs__icon" id="icon-settings"/>
+            <img src="restart.png" class="configs__icon" id="icon-restart"/>
             <div class="configs__option" id="btn-1P">1 Player</div>
             <div class="configs__option" id="btn-2P">2 Player</div>
             <div class="configs__option" id="btn-AI">AI mode</div>
@@ -28,34 +29,35 @@
 
     <a class="btn-start">Start</a>
     <div class="menu-box">
-        <ul class="controls-list">
-            <li class="controls-list__title"><span>GAME PAUSED</span></li>
-            <li><span>W / UP</span> Move paddle up</li>
-            <li><span>S / DOWN</span> Move paddle down</li>
-            <li><span>SPACE BAR </span> Pause/Play game</li>
-            <li><span>AI NPC</span>Difficulty Factor</li>
-            <li>
-                <div>
-                    <input type="range" id="p1-df" name="ai-factor" min="0.8" max="2.8" step="0.1">
-                    <label for="volume">P1</label>
-                </div>
-                <div>
-                    <input type="range" id="p2-df" name="ai-factor" min="0.8" max="2.8" step="0.1">
-                    <label for="volume">P2</label>
-                </div>
-            </li>
-            <li><span>SPEED</span>Change ball and paddle speed</li>
-            <li>
-                <div>
-                    <input type="range" id="ball-speed" name="ball-speed" min="1" max="12" step="1">
-                    <label for="volume">Ball</label>
-                </div>
-                <div>
-                    <input type="range" id="paddle-speed" name="paddle-speed" min="1" max="12" step="1">
-                    <label for="volume">Paddle</label>
-                </div>
-            </li>
-        </ul>
+        <div class="menu-help">
+            <ul class="menu-help__list">
+                <li> <span class="menu-cmd">W / UP</span> <span class="menu_desc">Move up</span></li>
+                <li> <span class="menu-cmd">S / DOWN</span> <span class="menu_desc">Move down</span></li>
+                <li> <span class="menu-cmd">SPACEBAR</span> <span class="menu_desc">Toggle Menu</span></li>
+            </ul>
+        </div>
+        <div class="menu-settings">
+            <span class="icon-close">  
+            </span>
+            <ul class="menu-settings__list">
+                <li>
+                    <span class="menu-cmd">P1 difficulty</span>
+                    <input type="range" class="slider" name="ai-factor" id="p1-df" min="1" max="3" step="0.1"/> 
+                </li>
+                <li>
+                    <span class="menu-cmd">P2 difficulty</span>
+                    <input type="range"  class="slider" name="ai-factor" id="p2-df" min="1" max="3" step="0.1"/>  
+                </li>
+                <li>
+                    <span class="menu-cmd">Ball Speed</span>
+                    <input type="range" class="slider" name="ball-speed" id="ball-speed" min="1" max="15" step="1"/>   
+                </li>
+                <li>
+                    <span class="menu-cmd">Paddle Speed</span>
+                    <input type="range" class="slider" name="paddle-speed" id="paddle-speed" min="1" max="10" step="1"/>  
+                </li>
+            </ul>
+        </div>
     </div>
     <footer>
         <a href="https://www.github.com/AdiPat">Built by <strong>Aditya Patange &copy;</strong></a>
