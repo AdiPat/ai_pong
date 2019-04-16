@@ -55,6 +55,10 @@ export default function setupUI(game, ctx) {
             if(elem.id === 'ball-speed') {
                 game.objects['ball'].boostSpeed(diffVal, true);
             }
+            if(elem.id === 'paddle-speed') {
+                game.objects['paddle-0'].boostSpeed(diffVal, true);
+                game.objects['paddle-1'].boostSpeed(diffVal, true);
+            }
         });
     }
 

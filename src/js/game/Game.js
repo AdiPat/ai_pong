@@ -48,11 +48,11 @@ export default class Game {
             y: baseSpeed * randomInt(minF, maxF) * randomDir()
         };
 
-        const pSpeed = CONFIGS.speed.p0;
+        const pSpeed = CONFIGS.speed['paddle-max']; 
         let b = new Ball(ballLoc.x, ballLoc.y, ballDim.radius, ballSpeed.x, ballSpeed.y, colors.ball, this.canvasCtx);
         b.setBaseSpeed(baseSpeed);
-        let p0 = new Paddle(locs.p0.x, locs.p0.y, pDim.width, pDim.height, pSpeed.y, colors.paddle, this.canvasCtx);
-        let p1 = new Paddle(locs.p1.x, locs.p1.y, pDim.width, pDim.height, pSpeed.y, colors.paddle, this.canvasCtx);
+        let p0 = new Paddle(locs.p0.x, locs.p0.y, pDim.width, pDim.height, pSpeed, colors.paddle, this.canvasCtx);
+        let p1 = new Paddle(locs.p1.x, locs.p1.y, pDim.width, pDim.height, pSpeed, colors.paddle, this.canvasCtx);
         return {
             'ball': b,
             'paddle-0': p0,

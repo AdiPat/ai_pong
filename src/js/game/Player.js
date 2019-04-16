@@ -18,15 +18,15 @@ export default class Player {
             "up": function(p, key) {
                 // set upward speed for paddle while button is pressed
                 if(key === 'keyup' || key == 'stop')
-                    p.setSpeed(0,0);
+                    p.halt();
                 else if(key == 'keydown' || key == 'move')
-                    p.setSpeed(0, -Math.abs(this.game.config.speed['paddle-max']));
+                    p.moveUp();
             }, 
             "down": function(p, key) {
                 if(key === 'keyup' || key == 'stop')
-                    p.setSpeed(0,0);
+                    p.halt();
                 else if(key == 'keydown' || key == 'move')
-                    p.setSpeed(0, Math.abs(this.game.config.speed['paddle-max']));
+                    p.moveDown();
             }
         }
 

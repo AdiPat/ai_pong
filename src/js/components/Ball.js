@@ -48,7 +48,7 @@ export default class Ball extends Component {
                 x: dirX * randomFloat(spMin, spMax),
                 y: dirY * randomFloat(spMin, spMax)
             };
-            console.log(speeds);
+            //console.log(speeds);
             this.setSpeed(speeds.x, speeds.y);
         }.bind(this);
 

@@ -19,6 +19,8 @@ export default class Paddle extends Component {
         this.width = width;
         this.height = height;
         this.cfactor = cfactor;
+        this.setSpeed(0,0);
+        this.curSpeed = Math.abs(speed); 
     }
 
     render() {
@@ -28,6 +30,19 @@ export default class Paddle extends Component {
         // bind current object to renderer
         super.render(renderer);
     }
+
+    halt() {
+        this.setSpeed(0, 0);
+    }
+
+    moveUp() {
+        this.setSpeed(0, -this.curSpeed);
+    }
+
+    moveDown() {
+        this.setSpeed(0, this.curSpeed);
+    }
+
 
     /**
      * Resets paddle speed and position
